@@ -48,6 +48,16 @@ void parallepipede(int x1, int y1, int z1, int x2, int y2, int z2) //Coordonnées
     glEnd();
 }
 
+void carre(int x,int y,int z, int l) //Coordonnées du coté bas gauche et longueur d'un coté
+{
+    glBegin(GL_QUADS);
+    glVertex3f(x,y,z);
+    glVertex3f(x+l,y,z);
+    glVertex3f(x+l,y+l,z);
+    glVertex3f(x,y+l,z);
+    glEnd();
+}
+
 void Decor()
 {
   glBegin(GL_QUADS);
@@ -96,6 +106,13 @@ void Bonhomme(int x, int y, int z) //Coordonnées du coté bas gauche du pied gauc
 
 }
 
+void Immeuble(int x, int y, int z) //Coordonnées du coté bas gauche
+{
+    glColor3f(0.6,0.6,0.6);
+    parallepipede(x,y,z,x+3,y+5,z+3);
+    //Pour la suite on a le choix entre dessiner des carrés pour les fenêtres ou appliquer une texture avec des fenetres
+}
+
 void Affichage(){
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -112,7 +129,8 @@ void Affichage(){
   glTranslatef(-1,-1,-1);
 
   //Decor();
-  Bonhomme(-1,-2,0);
+  //Bonhomme(-1,-2,0);
+  Immeuble(-1,-2,0);
 
   glutSwapBuffers();
 }
