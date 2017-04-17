@@ -1,6 +1,7 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
 #include <math.h>
+#include <stdio.h>
 
 float angle=0;
 
@@ -12,7 +13,7 @@ void animer()
   glutPostRedisplay();
 }
 
-void parallepipede(int x1, int y1, int z1, int x2, int y2, int z2) //Coordonnées du coté bas gauche et du coté haut droit
+void parallepipede(float x1, float y1, float z1, float x2, float y2, float z2) //Coordonnées du coté bas gauche et du coté haut droit
 {
     glBegin(GL_QUADS);
     //Bas
@@ -58,6 +59,31 @@ void carre(int x,int y,int z, int l) //Coordonnées du coté bas gauche et longueu
     glEnd();
 }
 
+void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche du pied de la pyramide
+{
+    glBegin(GL_QUADS);
+    glVertex3f(x,y,z);
+    glVertex3f(x+3,y,z);
+    glVertex3f(x+3,y,z+3);
+    glVertex3f(x,y,z+3);
+    glEnd();
+    glBegin(GL_TRIANGLES);
+    glVertex3f(x,y,z);
+    glVertex3f(x+3,y,z);
+    glVertex3f(x+1.5,y+1,z+1.5);
+    glVertex3f(x,y,z);
+    glVertex3f(x,y,z+3);
+    glVertex3f(x+1.5,y+1,z+1.5);
+    glVertex3f(x,y,z+3);
+    glVertex3f(x+3,y,z+3);
+    glVertex3f(x+1.5,y+1,z+1.5);
+    glVertex3f(x+3,y,z+3);
+    glVertex3f(x+3,y,z);
+    glVertex3f(x+1.5,y+1,z+1.5);
+    glEnd();
+
+}
+
 void Decor()
 {
   glBegin(GL_QUADS);
@@ -95,6 +121,7 @@ void Decor()
 
 void Bonhomme(int x, int y, int z) //Coordonnées du coté bas gauche du pied gauche
 {
+    glColor3ub(255,255,255); //On pourra changer le couleur pour chaque pnj
     parallepipede(x,y,z,x+1,y+2,z+1); //Pied gauche
     parallepipede(x+2,y,z,x+3,y+2,z+1); //Pied droit
     parallepipede(x,y+2,z,x+3,y+4,z+1); //Torse
@@ -113,6 +140,33 @@ void Immeuble(int x, int y, int z) //Coordonnées du coté bas gauche
     //Pour la suite on a le choix entre dessiner des carrés pour les fenêtres ou appliquer une texture avec des fenetres
 }
 
+void Arbre(int x, int y, int z, int r) //Coordonées du bas gauche du tronc et longueur d'un coté
+{
+    glColor3ub(139,69,19);
+    /*GLUquadric* cylinder = gluNewQuadric();
+    glTranslatef(x,y,z);
+    glRotatef(90,1,0,0);
+    gluCylinder(cylinder,r,r,2,20,20);
+    gluDeleteQuadric(cylinder);
+    glRotatef(-90,1,0,0);
+    glTranslatef(0,0,0);*/
+    parallepipede(x,y,z,x+r,y+2,z+r);
+    glColor3ub(34,139,34);
+    pyramide(x-r,y+2,z-r);
+    pyramide(x-r,y+2.5,z-r);
+    pyramide(x-r,y+3,z-r);
+}
+
+void Lampadaire(int x, int y, int z) //Coordonnées du pied
+{
+    glColor3ub(166,166,166);
+    parallepipede(x,y,z,x+0.5,y+3,z+0.5);
+    parallepipede(x-2,y+3,z,x+0.5,y+3.5,z+0.5);
+    glTranslatef(x-2,y+2.7,z+0.3);
+    glutSolidSphere(0.6,20,20);
+    glTranslatef(0,0,0);
+}
+
 void Affichage(){
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -129,8 +183,10 @@ void Affichage(){
   glTranslatef(-1,-1,-1);
 
   //Decor();
-  //Bonhomme(-1,-2,0);
-  Immeuble(-1,-2,0);
+  //Immeuble(-1,-2,0);
+  //Arbre(-1,-2,0,1);
+  //Bonhomme(-1,-2,2);
+  Lampadaire(-1,-2,2);
 
   glutSwapBuffers();
 }
