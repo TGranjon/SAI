@@ -3,14 +3,26 @@
 #include <math.h>
 #include <stdio.h>
 
-float angle=0;
+float posX=0;
+float posZ=-3;
 
-void animer()
+void clavier(unsigned char touche, int x, int y)
 {
-    angle += 0.05;
-    if(angle >360)
-        angle=0;
-  glutPostRedisplay();
+    if(touche=='z')
+        posZ+=0.1;
+    else if(touche=='s')
+        posZ-=0.1;
+    else if(touche=='q')
+        posX+=0.1;
+    else if(touche=='d')
+        posX-=0.1;
+
+}
+
+void mouvement()
+{
+    glutKeyboardFunc(clavier);
+    glutPostRedisplay();
 }
 
 void parallepipede(float x1, float y1, float z1, float x2, float y2, float z2) //Coordonnées du coté bas gauche et du coté haut droit
@@ -136,7 +148,7 @@ void Bonhomme(int x, int y, int z) //Coordonnées du coté bas gauche du pied gauc
 void Immeuble(int x, int y, int z) //Coordonnées du coté bas gauche
 {
     glColor3f(0.6,0.6,0.6);
-    parallepipede(x,y,z,x+3,y+5,z+3);
+    parallepipede(x,y,z,x+5,y+8,z+5);
     //Pour la suite on a le choix entre dessiner des carrés pour les fenêtres ou appliquer une texture avec des fenetres
 }
 
@@ -174,19 +186,16 @@ void Affichage(){
   glLoadIdentity();
 
   //Mise en place de l'observateur
-  glFrustum(-1,1, -1,1, 0.5,30);
-  gluLookAt(1,2,-3, 0,0,0 ,0,2,0);
+  glFrustum(posX-1,posX+1,-1,1,0.5,30);
   //Fin de mise en place de l'observateur
 
-  glTranslatef(1,1,1);
-  glRotatef(angle,0,1,0);
-  glTranslatef(-1,-1,-1);
+  gluLookAt(posX,1,posZ, posX,1,posZ+2, posX,2,posZ);
 
   //Decor();
   //Immeuble(-1,-2,0);
   //Arbre(-1,-2,0,1);
-  //Bonhomme(-1,-2,2);
-  Lampadaire(-1,-2,2);
+  Bonhomme(-1,-2,2);
+  //Lampadaire(-1,-2,2);
 
   glutSwapBuffers();
 }
@@ -202,7 +211,7 @@ int main(int argc, char * argv[], char * envp[]){
 
 
   glutDisplayFunc(Affichage);
-  glutIdleFunc(animer);
+  glutIdleFunc(mouvement);
 
   glutMainLoop();
   return 0;
