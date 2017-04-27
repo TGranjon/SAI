@@ -3,19 +3,35 @@
 #include <math.h>
 #include <stdio.h>
 
+float angle=0;
 float posX=0;
-float posZ=-3;
+float posZ=-1;
+float visX=0;
+float visZ=5;
 
 void clavier(unsigned char touche, int x, int y)
 {
-    if(touche=='z')
-        posZ+=0.1;
-    else if(touche=='s')
-        posZ-=0.1;
-    else if(touche=='q')
-        posX+=0.1;
-    else if(touche=='d')
-        posX-=0.1;
+    switch(touche)
+    {
+        case 'q' :
+            angle -= 0.05;
+            visX = sin(angle);
+            visZ = -cos(angle);
+            break;
+        case 'd' :
+            angle += 0.05;
+            visX = sin(angle);
+            visZ = -cos(angle);
+            break;
+        case 'z' :
+            posX += visX * 0.1;
+            posZ += visZ * 0.1;
+            break;
+        case 's' :
+            posX -= visX * 0.1;
+            posZ -= visZ * 0.1;
+            break;
+	}
 
 }
 
@@ -61,7 +77,7 @@ void parallepipede(float x1, float y1, float z1, float x2, float y2, float z2) /
     glEnd();
 }
 
-void carre(int x,int y,int z, int l) //Coordonnées du coté bas gauche et longueur d'un coté
+void carre(float x,float y,float z, float l) //Coordonnées du coté bas gauche et longueur d'un coté
 {
     glBegin(GL_QUADS);
     glVertex3f(x,y,z);
@@ -131,7 +147,7 @@ void Decor()
 
 }
 
-void Bonhomme(int x, int y, int z) //Coordonnées du coté bas gauche du pied gauche
+void Bonhomme(float x, float y, float z) //Coordonnées du coté bas gauche du pied gauche
 {
     glColor3ub(255,255,255); //On pourra changer le couleur pour chaque pnj
     parallepipede(x,y,z,x+1,y+2,z+1); //Pied gauche
@@ -145,14 +161,14 @@ void Bonhomme(int x, int y, int z) //Coordonnées du coté bas gauche du pied gauc
 
 }
 
-void Immeuble(int x, int y, int z) //Coordonnées du coté bas gauche
+void Immeuble(float x, float y, float z) //Coordonnées du coté bas gauche
 {
     glColor3f(0.6,0.6,0.6);
     parallepipede(x,y,z,x+5,y+8,z+5);
     //Pour la suite on a le choix entre dessiner des carrés pour les fenêtres ou appliquer une texture avec des fenetres
 }
 
-void Arbre(int x, int y, int z, int r) //Coordonées du bas gauche du tronc et longueur d'un coté
+void Arbre(float x, float y, float z, float r) //Coordonées du bas gauche du tronc et longueur d'un coté
 {
     glColor3ub(139,69,19);
     /*GLUquadric* cylinder = gluNewQuadric();
@@ -169,7 +185,7 @@ void Arbre(int x, int y, int z, int r) //Coordonées du bas gauche du tronc et lo
     pyramide(x-r,y+3,z-r);
 }
 
-void Lampadaire(int x, int y, int z) //Coordonnées du pied
+void Lampadaire(float x, float y, float z) //Coordonnées du pied
 {
     glColor3ub(166,166,166);
     parallepipede(x,y,z,x+0.5,y+3,z+0.5);
@@ -186,16 +202,16 @@ void Affichage(){
   glLoadIdentity();
 
   //Mise en place de l'observateur
-  glFrustum(posX-1,posX+1,-1,1,0.5,30);
+  glFrustum(-1,1, -1,1, 0.5,30);
   //Fin de mise en place de l'observateur
 
-  gluLookAt(posX,1,posZ, posX,1,posZ+2, posX,2,posZ);
+  gluLookAt(posX,1,posZ, posX+visX,1,posZ+visZ, 0,1,0);
 
   //Decor();
-  //Immeuble(-1,-2,0);
-  //Arbre(-1,-2,0,1);
-  Bonhomme(-1,-2,2);
-  //Lampadaire(-1,-2,2);
+  Immeuble(0,0,-5);
+  Arbre(5,0,0,1);
+  Bonhomme(0,0,5);
+  Lampadaire(-5,0,0);
 
   glutSwapBuffers();
 }
@@ -216,4 +232,3 @@ int main(int argc, char * argv[], char * envp[]){
   glutMainLoop();
   return 0;
 }
-
