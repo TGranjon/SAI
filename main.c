@@ -1,13 +1,27 @@
-#include <GL/gl.h>
-#include <GL/glut.h>
-#include <math.h>
-#include <stdio.h>
+#include "main.h"
 
 float angle=0;
 float posX=0;
 float posZ=-1;
 float visX=0;
 float visZ=5;
+TableTotale tableT;
+
+int appartient(int xP, int zP)
+{
+    int a;
+    for(a=0;a<tableT.taille;a++)
+    {
+        if((xP>=tableT.forme[a].minP.x)&&(xP<=tableT.forme[a].maxP.x))
+        {
+            if((zP>=tableT.forme[a].minP.z)&&(zP<=tableT.forme[a].maxP.z))
+                return 1; // Vrai
+            else return 0; // Faux
+        }
+        else return 0; // Faux
+    }
+    return 0; // Cas d'erreur
+}
 
 void clavier(unsigned char touche, int x, int y)
 {
@@ -24,10 +38,14 @@ void clavier(unsigned char touche, int x, int y)
             visZ = -cos(angle);
             break;
         case 'z' :
+            if(appartient(posX+visX*0.1,posZ+visZ*0.1)==1)
+                break;
             posX += visX * 0.1;
             posZ += visZ * 0.1;
             break;
         case 's' :
+            if(appartient(posX-visX*0.1,posZ-visZ*0.1)==1)
+                break;
             posX -= visX * 0.1;
             posZ -= visZ * 0.1;
             break;
@@ -208,7 +226,14 @@ void Affichage(){
   gluLookAt(posX,1,posZ, posX+visX,1,posZ+visZ, 0,1,0);
 
   //Decor();
-  Immeuble(0,0,-5);
+  Immeuble(-1,0,-6);
+  /*
+  tableT.taille++;
+  tableT.forme[0].minP.x=-1;
+  tableT.forme[0].minP.z=-6;
+  tableT.forme[0].maxP.x=4;
+  tableT.forme[0].maxP.z=-1;
+  */ // Bonne méthode mais imperfections
   Arbre(5,0,0,1);
   Bonhomme(0,0,5);
   Lampadaire(-5,0,0);
@@ -218,6 +243,7 @@ void Affichage(){
 
 int main(int argc, char * argv[], char * envp[]){
 
+  tableT.taille=0;
   glutInit(&argc,argv);
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
   glutInitWindowSize(600,600);
