@@ -6,8 +6,8 @@
 
 typedef struct point
 {
-    int x;
-    int z;
+    float x;
+    float z;
 } Point;
 
 typedef struct tableforme
@@ -21,3 +21,29 @@ typedef struct tabletotale
     int taille;
     TableForme forme[20]; // A determiner avec le 4-arbre
 } TableTotale;
+
+int appartient(float xP, float zP);
+
+void clavier(unsigned char touche, int x, int y);
+
+void mouvement();
+
+void parallepipede(float x1, float y1, float z1, float x2, float y2, float z2);
+
+void carre(float x,float y,float z, float l);
+
+void pyramide(float x, float y, float z);
+
+void Decor();
+
+void Bonhomme(float x, float y, float z);
+
+void Immeuble(float x, float y, float z);
+
+void Arbre(float x, float y, float z, float r);
+
+void Lampadaire(float x, float y, float z);
+
+void Affichage();
+
+int main(int argc, char * argv[], char * envp[]);
