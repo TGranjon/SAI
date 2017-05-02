@@ -7,7 +7,7 @@ float visX=0;
 float visZ=5;
 TableTotale tableT;
 
-int appartient(int xP, int zP)
+int appartient(float xP, float zP)
 {
     int a;
     for(a=0;a<tableT.taille;a++)
@@ -59,7 +59,7 @@ void mouvement()
     glutPostRedisplay();
 }
 
-void parallepipede(float x1, float y1, float z1, float x2, float y2, float z2) //Coordonnées du coté bas gauche et du coté haut droit
+void parallepipede(float x1, float y1, float z1, float x2, float y2, float z2) //CoordonnÃ©es du cotÃ© bas gauche et du cotÃ© haut droit
 {
     glBegin(GL_QUADS);
     //Bas
@@ -77,7 +77,7 @@ void parallepipede(float x1, float y1, float z1, float x2, float y2, float z2) /
     glVertex3f(x1,y1,z2);
     glVertex3f(x1,y2,z2);
     glVertex3f(x1,y2,z1);
-    //Arrière
+    //ArriÃ¨re
     glVertex3f(x1,y1,z2);
     glVertex3f(x2,y1,z2);
     glVertex3f(x2,y2,z2);
@@ -95,7 +95,7 @@ void parallepipede(float x1, float y1, float z1, float x2, float y2, float z2) /
     glEnd();
 }
 
-void carre(float x,float y,float z, float l) //Coordonnées du coté bas gauche et longueur d'un coté
+void carre(float x,float y,float z, float l) //CoordonnÃ©es du cotÃ© bas gauche et longueur d'un cotÃ©
 {
     glBegin(GL_QUADS);
     glVertex3f(x,y,z);
@@ -105,7 +105,7 @@ void carre(float x,float y,float z, float l) //Coordonnées du coté bas gauche et
     glEnd();
 }
 
-void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche du pied de la pyramide
+void pyramide(float x, float y, float z) //CoordonÃ©es du coin infÃ©rieur gauche du pied de la pyramide
 {
     glBegin(GL_QUADS);
     glVertex3f(x,y,z);
@@ -165,7 +165,7 @@ void Decor()
 
 }
 
-void Bonhomme(float x, float y, float z) //Coordonnées du coté bas gauche du pied gauche
+void Bonhomme(float x, float y, float z) //CoordonnÃ©es du cotÃ© bas gauche du pied gauche
 {
     glColor3ub(255,255,255); //On pourra changer le couleur pour chaque pnj
     parallepipede(x,y,z,x+1,y+2,z+1); //Pied gauche
@@ -174,19 +174,19 @@ void Bonhomme(float x, float y, float z) //Coordonnées du coté bas gauche du pie
     parallepipede(x-1,y+3,z,x,y+4,z+1); //Bras gauche
     parallepipede(x+3,y+3,z,x+4,y+4,z+1); //Bras droit
     glTranslatef(x+1.5,y+4.5,z+0.5);
-    glutSolidSphere(1,20,20); //Tête
+    glutSolidSphere(1,20,20); //TÃªte
     glTranslatef(0,0,0);
 
 }
 
-void Immeuble(float x, float y, float z) //Coordonnées du coté bas gauche
+void Immeuble(float x, float y, float z) //CoordonnÃ©es du cotÃ© bas gauche
 {
     glColor3f(0.6,0.6,0.6);
     parallepipede(x,y,z,x+5,y+8,z+5);
-    //Pour la suite on a le choix entre dessiner des carrés pour les fenêtres ou appliquer une texture avec des fenetres
+    //Pour la suite on a le choix entre dessiner des carrÃ©s pour les fenÃªtres ou appliquer une texture avec des fenetres
 }
 
-void Arbre(float x, float y, float z, float r) //Coordonées du bas gauche du tronc et longueur d'un coté
+void Arbre(float x, float y, float z, float r) //CoordonÃ©es du bas gauche du tronc et longueur d'un cotÃ©
 {
     glColor3ub(139,69,19);
     /*GLUquadric* cylinder = gluNewQuadric();
@@ -203,7 +203,7 @@ void Arbre(float x, float y, float z, float r) //Coordonées du bas gauche du tro
     pyramide(x-r,y+3,z-r);
 }
 
-void Lampadaire(float x, float y, float z) //Coordonnées du pied
+void Lampadaire(float x, float y, float z) //CoordonnÃ©es du pied
 {
     glColor3ub(166,166,166);
     parallepipede(x,y,z,x+0.5,y+3,z+0.5);
@@ -233,7 +233,7 @@ void Affichage(){
   tableT.forme[0].minP.z=-6;
   tableT.forme[0].maxP.x=4;
   tableT.forme[0].maxP.z=-1;
-  */ // Bonne méthode mais imperfections
+  */ // Bonne mÃ©thode mais imperfections
   Arbre(5,0,0,1);
   Bonhomme(0,0,5);
   Lampadaire(-5,0,0);
