@@ -6,6 +6,7 @@ float posZ=-1;
 float visX=0;
 float visZ=5;
 TableTotale tableT;
+int objectif[10];
 
 int appartient(float xP, float zP)
 {
@@ -175,7 +176,6 @@ void Bonhomme(float x, float y, float z) //Coordonnées du coté bas gauche du p
     parallepipede(x+3,y+3,z,x+4,y+4,z+1); //Bras droit
     glTranslatef(x+1.5,y+4.5,z+0.5);
     glutSolidSphere(1,20,20); //Tête
-    glTranslatef(0,0,0);
 
 }
 
@@ -189,13 +189,6 @@ void Immeuble(float x, float y, float z) //Coordonnées du coté bas gauche
 void Arbre(float x, float y, float z, float r) //Coordonées du bas gauche du tronc et longueur d'un coté
 {
     glColor3ub(139,69,19);
-    /*GLUquadric* cylinder = gluNewQuadric();
-    glTranslatef(x,y,z);
-    glRotatef(90,1,0,0);
-    gluCylinder(cylinder,r,r,2,20,20);
-    gluDeleteQuadric(cylinder);
-    glRotatef(-90,1,0,0);
-    glTranslatef(0,0,0);*/
     parallepipede(x,y,z,x+r,y+2,z+r);
     glColor3ub(34,139,34);
     pyramide(x-r,y+2,z-r);
@@ -210,7 +203,14 @@ void Lampadaire(float x, float y, float z) //Coordonnées du pied
     parallepipede(x-2,y+3,z,x+0.5,y+3.5,z+0.5);
     glTranslatef(x-2,y+2.7,z+0.3);
     glutSolidSphere(0.6,20,20);
-    glTranslatef(0,0,0);
+}
+
+void Objectif(float x, float y, float z, int num) //Coordonées du centre et numero de l'objectif
+{
+    glColor3ub(0,0,200);
+    glTranslatef(x,y,z);
+    glutSolidSphere(0.6,10,10);
+    objectif[num]=1; //Signifie que l'objectif est encore présent (non trouvé)
 }
 
 void Affichage(){
@@ -237,6 +237,7 @@ void Affichage(){
   Arbre(5,0,0,1);
   Bonhomme(0,0,5);
   Lampadaire(-5,0,0);
+  Objectif(0,1,2,1);
 
   glutSwapBuffers();
 }
@@ -244,6 +245,11 @@ void Affichage(){
 int main(int argc, char * argv[], char * envp[]){
 
   tableT.taille=0;
+  int i;
+  for(i=0;i<10;i++)
+  {
+      objectif[i]=0;
+  }
   glutInit(&argc,argv);
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
   glutInitWindowSize(600,600);
