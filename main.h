@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define TRUE 1
+#define FALSE 0
+
 typedef struct point
 {
     float x;
@@ -44,7 +47,7 @@ void Arbre(float x, float y, float z, float r);
 
 void Lampadaire(float x, float y, float z);
 
-void Objectif(float x, float y, float z, int num);
+void objectif(float x, float y, float z, int num);
 
 void Affichage();
 

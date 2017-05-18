@@ -216,7 +216,7 @@ void Objectif(float x, float y, float z, int num) //Coordonées du centre et num
     glTranslatef(x,y,z);
     glutSolidSphere(0.6,10,10);
     glPopMatrix();
-    objectif_liste[num]=1; //Signifie que l'objectif est encore présent (non trouvé)
+    objectif_liste[num]=TRUE; //Signifie que l'objectif est encore présent (non trouvé)
 }
 
 void Affichage(){
@@ -233,17 +233,16 @@ void Affichage(){
 
   //Decor();
   Immeuble(-1,0,-6);
-  /*
-  tableT.taille++;
-  tableT.forme[0].minP.x=-1;
-  tableT.forme[0].minP.z=-6;
-  tableT.forme[0].maxP.x=4;
-  tableT.forme[0].maxP.z=-1;
-  */ // Bonne méthode mais imperfections
+  /*tableT.taille++;
+  tableT.forme[tableT.taille].minP.x=-1;
+  tableT.forme[tableT.taille].minP.z=-6;
+  tableT.forme[tableT.taille].maxP.x=4;
+  tableT.forme[tableT.taille].maxP.z=-1;
+  */ // Bonne méthode mais taille++ infini
   Arbre(5,0,0,1);
   Bonhomme(0,0,5);
   Lampadaire(-5,0,0);
-  Objectif(0,1,2,1);
+  Objectif(0,1,2,0);
 
   glutSwapBuffers();
 }
@@ -254,7 +253,7 @@ int main(int argc, char * argv[], char * envp[]){
   int i;
   for(i=0;i<10;i++)
   {
-      objectif_liste[i]=0;
+      objectif_liste[i]=FALSE;
   }
   glutInit(&argc,argv);
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
