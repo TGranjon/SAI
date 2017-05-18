@@ -10,7 +10,7 @@ float minX=-52;
 float maxX=52;
 float minZ=-55;
 float maxZ=53;
-int nbObjets=15;
+int nbObjets=15; // Peut etre changé
 TableTotale tableT; // Liste des carrés de collision
 int objectif_liste[10]; // Booléen objectif trouvé
 
@@ -281,88 +281,66 @@ int main(int argc, char * argv[], char * envp[]){
   glutDisplayFunc(Affichage);
   glutIdleFunc(mouvement);
 
-  // Initialisation des figures et des collisions
-  tableT.forme[tableT.taille].minP.x=-3; //Immeuble
-  tableT.forme[tableT.taille].minP.z=-8;
-  tableT.forme[tableT.taille].maxP.x=2;
-  tableT.forme[tableT.taille].maxP.z=-3;
-  tableT.taille++;
-  tableT.forme[tableT.taille].minP.x=5; //Arbre
-  tableT.forme[tableT.taille].minP.z=0;
-  tableT.forme[tableT.taille].maxP.x=6;
-  tableT.forme[tableT.taille].maxP.z=1;
-  tableT.taille++;
-  tableT.forme[tableT.taille].minP.x=-5; //Lampadaire
-  tableT.forme[tableT.taille].minP.z=0;
-  tableT.forme[tableT.taille].maxP.x=-4.5;
-  tableT.forme[tableT.taille].maxP.z=0.5;
-  tableT.taille++;
-  tableT.forme[tableT.taille].minP.x=0; //Bonhomme
-  tableT.forme[tableT.taille].minP.z=5;
-  tableT.forme[tableT.taille].maxP.x=3;
-  tableT.forme[tableT.taille].maxP.z=6;
-  tableT.taille++;
-
   //Creation du tableau contenant les objets
   float tabObj[nbObjets][5];
-  
-  //Genereation des objets
+
+  //Generation des objets
   float x,y,z,r;
-  for(int i=0; i<nbObjets; i++){
+  for(i=0; i<nbObjets; i++){
   	int objet = rand()%(4-1)+1;
    	x=0;y=0;z=0;r=0;
    	switch(objet){
-   	
-   	//Immeuble
-   	case 1:
+
+   	case 1: //Immeuble
    		x=(rand()%(104)+1)-52;
-   		//fprintf(stdout,"x :%i ",x);
    		y=0;
    		z=(rand()%(108)+1)-55;
-   		//fprintf(stdout,"z :%i\n",z);
    		tabObj[i][0] = objet;
    		tabObj[i][1] = x;
    		tabObj[i][2] = y;
    		tabObj[i][3] = z;
-   		//Immeuble(x,y,z);
+   		tableT.forme[tableT.taille].minP.x=-x;
+        tableT.forme[tableT.taille].minP.z=z;
+        tableT.forme[tableT.taille].maxP.x=x+5;
+        tableT.forme[tableT.taille].maxP.z=z+5;
+        tableT.taille++;
    		break;
-   	
-   	//Arbre
-   	case 2:
+
+   	case 2: //Arbre
    		x=(rand()%(104)+1)-52;
-   		//fprintf(stdout,"x :%i ",x);
    		y=0;
    		z=(rand()%(108)+1)-55;
-   		//fprintf(stdout,"z :%i ",z);
    		r=rand()%(6-1)+1;
-   		//fprintf(stdout,"r :%i\n",r);
-	 	//Arbre(x,y,z,r);
 	 	tabObj[i][0] = objet;
     	tabObj[i][1] = x;
     	tabObj[i][2] = y;
     	tabObj[i][3] = z;
     	tabObj[i][4] = r;
+    	tableT.forme[tableT.taille].minP.x=x;
+        tableT.forme[tableT.taille].minP.z=z;
+        tableT.forme[tableT.taille].maxP.x=x+r;
+        tableT.forme[tableT.taille].maxP.z=z+r;
+        tableT.taille++;
     	break;
-    
-    //Lampadaire
-    case 3:
+
+    case 3: //Lampadaire
     	x=(rand()%(104)+1)-52;
-    	//fprintf(stdout,"x :%i ",x);
     	y=0;
     	z=(rand()%(108)+1)-55;
-    	//fprintf(stdout," z :%i\n",z);
-    	//Lampadaire(x,y,z);
 	 	tabObj[i][0] = objet;
     	tabObj[i][1] = x;
     	tabObj[i][2] = y;
     	tabObj[i][3] = z;
+    	tableT.forme[tableT.taille].minP.x=x;
+        tableT.forme[tableT.taille].minP.z=z;
+        tableT.forme[tableT.taille].maxP.x=x+0.5;
+        tableT.forme[tableT.taille].maxP.z=z+0.5;
+        tableT.taille++;
     	break;
     default:
     	break;
     }
   }
-  
-  //fprintf(stdout,"%f %f %f %f %f\n",tabObj[0][0],tabObj[0][1],tabObj[0][2],tabObj[0][3],tabObj[0][4]);
 
   glutMainLoop();
   return 0;
