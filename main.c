@@ -14,19 +14,16 @@ int objectif_liste[10];
 
 int appartient(float xP, float zP)
 {
-
     int a;
     for(a=0;a<tableT.taille;a++)
     {
-        if((xP>=tableT.forme[a].minP.x-0.1)&&(xP<=tableT.forme[a].maxP.x+0.1))
+        if((xP>=tableT.forme[a].minP.x)&&(xP<=tableT.forme[a].maxP.x))
         {
-            if((zP>=tableT.forme[a].minP.z-0.1)&&(zP<=tableT.forme[a].maxP.z+0.1))
+            if((zP>=tableT.forme[a].minP.z)&&(zP<=tableT.forme[a].maxP.z))
                 return TRUE;
-            else return FALSE;
         }
-        else return FALSE;
     }
-    return FALSE; // Cas d'erreur
+    return FALSE;
 }
 
 int dansPlateau(float xp, float zp){
@@ -256,14 +253,6 @@ void Affichage(){
 
   //Decor();
   Immeuble(-3,0,-8);
-  /*
-  tableT.taille++;
-  tableT.forme[0].minP.x=-3;
-  tableT.forme[0].minP.z=-8;
-  tableT.forme[0].maxP.x=2;
-  tableT.forme[0].maxP.z=-3;
-  // Bonne méthode mais taille++ infini
-  */
   Arbre(5,0,0,1);
   Bonhomme(0,0,5);
   Lampadaire(-5,0,0);
@@ -287,9 +276,30 @@ int main(int argc, char * argv[], char * envp[]){
   glutCreateWindow("Projet - Main");
   glEnable(GL_DEPTH_TEST);
 
-
   glutDisplayFunc(Affichage);
   glutIdleFunc(mouvement);
+
+
+  tableT.forme[tableT.taille].minP.x=-3; //Immeuble
+  tableT.forme[tableT.taille].minP.z=-8;
+  tableT.forme[tableT.taille].maxP.x=2;
+  tableT.forme[tableT.taille].maxP.z=-3;
+  tableT.taille++;
+  tableT.forme[tableT.taille].minP.x=5; //Arbre
+  tableT.forme[tableT.taille].minP.z=0;
+  tableT.forme[tableT.taille].maxP.x=6;
+  tableT.forme[tableT.taille].maxP.z=1;
+  tableT.taille++;
+  tableT.forme[tableT.taille].minP.x=-5; //Lampadaire
+  tableT.forme[tableT.taille].minP.z=0;
+  tableT.forme[tableT.taille].maxP.x=-4.5;
+  tableT.forme[tableT.taille].maxP.z=0.5;
+  tableT.taille++;
+  tableT.forme[tableT.taille].minP.x=0; //Bonhomme
+  tableT.forme[tableT.taille].minP.z=5;
+  tableT.forme[tableT.taille].maxP.x=3;
+  tableT.forme[tableT.taille].maxP.z=6;
+  tableT.taille++;
 
   glutMainLoop();
   return 0;
