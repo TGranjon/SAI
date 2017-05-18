@@ -154,7 +154,6 @@ void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche
     glVertex3f(x+3,y,z);
     glVertex3f(x+1.5,y+1,z+1.5);
     glEnd();
-
 }
 
 void Decor() //! A adapter au plateau
@@ -205,7 +204,6 @@ void Immeuble(float x, float y, float z) //Coordonnées du coté bas gauche
 {
     glColor3f(0.6,0.6,0.6);
     parallepipede(x,y,z,x+5,y+8,z+5);
-    //Pour la suite on a le choix entre dessiner des carrés pour les fenêtres ou appliquer une texture avec des fenetres
 }
 
 void Arbre(float x, float y, float z, float r) //Coordonées du bas gauche du tronc et longueur d'un coté
@@ -292,11 +290,11 @@ int main(int argc, char * argv[], char * envp[]){
   for(i=0; i<nbObjets; i++){
   	int objet = rand()%(4-1)+1;
    	x=0;y=0;z=0;r=0;
-   	
-   	switch(objet){   	
+
+   	switch(objet){
    	//Immeuble
    	case 1:
-   		//Vérification que le point choisit n'est pas en collision avec un autre objet
+   		//Vérification que le point choisi n'est pas en collision avec un autre objet
 		do{
 			x=(rand()%(104)+1)-52;
 			z=(rand()%(108)+1)-55;
@@ -306,11 +304,16 @@ int main(int argc, char * argv[], char * envp[]){
    		tabObj[i][1] = x;
    		tabObj[i][2] = y;
    		tabObj[i][3] = z;
+   		tableT.forme[tableT.taille].minP.x=x;
+        tableT.forme[tableT.taille].minP.z=z;
+        tableT.forme[tableT.taille].maxP.x=x+5;
+        tableT.forme[tableT.taille].maxP.z=z+5;
+        tableT.taille++;
    		break;
-   	
+
    	//Arbre
    	case 2:
-   	   	//Vérification que le point choisit n'est pas en collision avec un autre objet
+   	   	//Vérification que le point choisi n'est pas en collision avec un autre objet
    		do{
 			x=(rand()%(104)+1)-52;
 			z=(rand()%(108)+1)-55;
@@ -328,10 +331,10 @@ int main(int argc, char * argv[], char * envp[]){
         tableT.forme[tableT.taille].maxP.z=z+r;
         tableT.taille++;
     	break;
-    
+
     //Lampadaire
     case 3:
-  		//Vérification que le point choisit n'est pas en collision avec un autre objet
+  		//Vérification que le point choisi n'est pas en collision avec un autre objet
    		do{
 			x=(rand()%(104)+1)-52;
 			z=(rand()%(108)+1)-55;
