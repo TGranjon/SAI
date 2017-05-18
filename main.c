@@ -10,6 +10,7 @@ float minX=-52;
 float maxX=52;
 float minZ=-55;
 float maxZ=53;
+//Nombre d'objet généré aléatoirement
 int nbObjets=15;
 TableTotale tableT; // Liste des carrés de collision
 int objectif_liste[10]; // Booléen objectif trouvé
@@ -308,35 +309,36 @@ int main(int argc, char * argv[], char * envp[]){
   
   //Genereation des objets
   float x,y,z,r;
+  //Boucle de creation des nbObjets objets
   for(int i=0; i<nbObjets; i++){
   	int objet = rand()%(4-1)+1;
    	x=0;y=0;z=0;r=0;
+   	
    	switch(objet){
    	
    	//Immeuble
    	case 1:
-   		x=(rand()%(104)+1)-52;
-   		//fprintf(stdout,"x :%i ",x);
+   		//Vérification que le point choisit n'est pas en collision avec un autre objet
+		while(appartient()==TRUE){
+			x=(rand()%(104)+1)-52;
+			z=(rand()%(108)+1)-55;
+		}  		
    		y=0;
-   		z=(rand()%(108)+1)-55;
-   		//fprintf(stdout,"z :%i\n",z);
    		tabObj[i][0] = objet;
    		tabObj[i][1] = x;
    		tabObj[i][2] = y;
    		tabObj[i][3] = z;
-   		//Immeuble(x,y,z);
    		break;
    	
    	//Arbre
    	case 2:
-   		x=(rand()%(104)+1)-52;
-   		//fprintf(stdout,"x :%i ",x);
+   	   	//Vérification que le point choisit n'est pas en collision avec un autre objet
+   		while(appartient()==TRUE){
+			x=(rand()%(104)+1)-52;
+			z=(rand()%(108)+1)-55;
+		}
    		y=0;
-   		z=(rand()%(108)+1)-55;
-   		//fprintf(stdout,"z :%i ",z);
    		r=rand()%(6-1)+1;
-   		//fprintf(stdout,"r :%i\n",r);
-	 	//Arbre(x,y,z,r);
 	 	tabObj[i][0] = objet;
     	tabObj[i][1] = x;
     	tabObj[i][2] = y;
@@ -346,12 +348,12 @@ int main(int argc, char * argv[], char * envp[]){
     
     //Lampadaire
     case 3:
-    	x=(rand()%(104)+1)-52;
-    	//fprintf(stdout,"x :%i ",x);
+  		//Vérification que le point choisit n'est pas en collision avec un autre objet
+   		while(appartient()==TRUE){
+			x=(rand()%(104)+1)-52;
+			z=(rand()%(108)+1)-55;
+		}
     	y=0;
-    	z=(rand()%(108)+1)-55;
-    	//fprintf(stdout," z :%i\n",z);
-    	//Lampadaire(x,y,z);
 	 	tabObj[i][0] = objet;
     	tabObj[i][1] = x;
     	tabObj[i][2] = y;
@@ -361,8 +363,6 @@ int main(int argc, char * argv[], char * envp[]){
     	break;
     }
   }
-  
-  //fprintf(stdout,"%f %f %f %f %f\n",tabObj[0][0],tabObj[0][1],tabObj[0][2],tabObj[0][3],tabObj[0][4]);
 
   glutMainLoop();
   return 0;
