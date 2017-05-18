@@ -22,7 +22,7 @@ typedef struct tableforme
 typedef struct tabletotale
 {
     int taille;
-    TableForme forme[20]; // A determiner avec le 4-arbre
+    TableForme forme[21]; // A determiner avec le 4-arbre
 } TableTotale;
 
 int appartient(float xP, float zP);

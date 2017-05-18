@@ -16,12 +16,12 @@ int appartient(float xP, float zP)
         if((xP>=tableT.forme[a].minP.x)&&(xP<=tableT.forme[a].maxP.x))
         {
             if((zP>=tableT.forme[a].minP.z)&&(zP<=tableT.forme[a].maxP.z))
-                return 1; // Vrai
-            else return 0; // Faux
+                return TRUE;
+            else return FALSE;
         }
-        else return 0; // Faux
+        else return FALSE;
     }
-    return 0; // Cas d'erreur
+    return FALSE; // Cas d'erreur
 }
 
 void clavier(unsigned char touche, int x, int y)
@@ -39,13 +39,13 @@ void clavier(unsigned char touche, int x, int y)
             visZ = -cos(angle);
             break;
         case 'z' :
-            if(appartient(posX+visX*0.1,posZ+visZ*0.1)==1)
+            if(appartient(posX+visX*0.1,posZ+visZ*0.1)==TRUE)
                 break;
             posX += visX * 0.1;
             posZ += visZ * 0.1;
             break;
-        case 's' :
-            if(appartient(posX-visX*0.1,posZ-visZ*0.1)==1)
+        case 's' : // Risque de poser des problemes lors du 4-arbre
+            if(appartient(posX-visX*0.1,posZ-visZ*0.1)==TRUE)
                 break;
             posX -= visX * 0.1;
             posZ -= visZ * 0.1;
@@ -226,7 +226,7 @@ void Affichage(){
   glLoadIdentity();
 
   //Mise en place de l'observateur
-  glFrustum(-1,1, -1,1, 0.5,30);
+  glFrustum(-1,1, -1,1, 0.5,40);
   //Fin de mise en place de l'observateur
 
   gluLookAt(posX,1,posZ, posX+visX,1,posZ+visZ, 0,1,0);
@@ -234,10 +234,10 @@ void Affichage(){
   //Decor();
   Immeuble(-1,0,-6);
   /*tableT.taille++;
-  tableT.forme[tableT.taille].minP.x=-1;
-  tableT.forme[tableT.taille].minP.z=-6;
-  tableT.forme[tableT.taille].maxP.x=4;
-  tableT.forme[tableT.taille].maxP.z=-1;
+  tableT.forme[1].minP.x=-1;
+  tableT.forme[1].minP.z=-6;
+  tableT.forme[1].maxP.x=4;
+  tableT.forme[1].maxP.z=-1;
   */ // Bonne méthode mais taille++ infini
   Arbre(5,0,0,1);
   Bonhomme(0,0,5);
