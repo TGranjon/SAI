@@ -297,11 +297,11 @@ int main(int argc, char * argv[], char * envp[]){
    	//Immeuble
    	case 1:
    		//Vérification que le point choisit n'est pas en collision avec un autre objet
-		while(appartient()==TRUE){
+		do{
 			x=(rand()%(104)+1)-52;
 			z=(rand()%(108)+1)-55;
-		}  		
-   		y=0;
+		}while(appartient(x,z)==TRUE);
+		y=0;
    		tabObj[i][0] = objet;
    		tabObj[i][1] = x;
    		tabObj[i][2] = y;
@@ -311,10 +311,10 @@ int main(int argc, char * argv[], char * envp[]){
    	//Arbre
    	case 2:
    	   	//Vérification que le point choisit n'est pas en collision avec un autre objet
-   		while(appartient()==TRUE){
+   		do{
 			x=(rand()%(104)+1)-52;
 			z=(rand()%(108)+1)-55;
-		}
+		}while(appartient(x,z)==TRUE);
    		y=0;
    		r=rand()%(6-1)+1;
 	 	tabObj[i][0] = objet;
@@ -332,10 +332,10 @@ int main(int argc, char * argv[], char * envp[]){
     //Lampadaire
     case 3:
   		//Vérification que le point choisit n'est pas en collision avec un autre objet
-   		while(appartient()==TRUE){
+   		do{
 			x=(rand()%(104)+1)-52;
 			z=(rand()%(108)+1)-55;
-		}
+		}while(appartient(x,z)==TRUE);
     	y=0;
 	 	tabObj[i][0] = objet;
     	tabObj[i][1] = x;
