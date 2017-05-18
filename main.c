@@ -14,12 +14,13 @@ int objectif_liste[10];
 
 int appartient(float xP, float zP)
 {
+
     int a;
     for(a=0;a<tableT.taille;a++)
     {
-        if((xP>=tableT.forme[a].minP.x)&&(xP<=tableT.forme[a].maxP.x))
+        if((xP>=tableT.forme[a].minP.x-0.1)&&(xP<=tableT.forme[a].maxP.x+0.1))
         {
-            if((zP>=tableT.forme[a].minP.z)&&(zP<=tableT.forme[a].maxP.z))
+            if((zP>=tableT.forme[a].minP.z-0.1)&&(zP<=tableT.forme[a].maxP.z+0.1))
                 return TRUE;
             else return FALSE;
         }
@@ -66,7 +67,6 @@ void clavier(unsigned char touche, int x, int y)
             }
             break;
 	}
-
 }
 
 void mouvement()
@@ -160,12 +160,6 @@ void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche
 void Decor()
 {
   glBegin(GL_QUADS);
-  //bas gris
-  glColor3f(0.5,0.5,0.5);
-  glVertex3f(-5,0,-5);
-  glVertex3f(-5,0,5);
-  glVertex3f(5,0,5);
-  glVertex3f(5,0,-5);
   //Fond bleu
   glColor3f(0,0.4,0.8);
   glVertex3f(-5,0,-5);
@@ -261,13 +255,15 @@ void Affichage(){
   plateau(-52,0,-55,104,108);
 
   //Decor();
-  Immeuble(-1,0,-6);
-  /*tableT.taille++;
-  tableT.forme[1].minP.x=-1;
-  tableT.forme[1].minP.z=-6;
-  tableT.forme[1].maxP.x=4;
-  tableT.forme[1].maxP.z=-1;
-  */ // Bonne méthode mais taille++ infini
+  Immeuble(-3,0,-8);
+  /*
+  tableT.taille++;
+  tableT.forme[0].minP.x=-3;
+  tableT.forme[0].minP.z=-8;
+  tableT.forme[0].maxP.x=2;
+  tableT.forme[0].maxP.z=-3;
+  // Bonne méthode mais taille++ infini
+  */
   Arbre(5,0,0,1);
   Bonhomme(0,0,5);
   Lampadaire(-5,0,0);
