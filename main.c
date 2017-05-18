@@ -5,6 +5,10 @@ float posX=0;
 float posZ=-1;
 float visX=0;
 float visZ=5;
+float minX=-52;
+float maxX=52;
+float minZ=-55;
+float maxZ=53;
 TableTotale tableT;
 int objectif_liste[10];
 
@@ -24,6 +28,13 @@ int appartient(float xP, float zP)
     return FALSE; // Cas d'erreur
 }
 
+int dansPlateau(float xp, float zp){
+	if(xp>=minX && xp<=maxX && zp>=minZ && zp<=maxZ){
+		return TRUE;
+	}
+	return FALSE;
+}
+
 void clavier(unsigned char touche, int x, int y)
 {
     switch(touche)
@@ -41,14 +52,18 @@ void clavier(unsigned char touche, int x, int y)
         case 'z' :
             if(appartient(posX+visX*0.1,posZ+visZ*0.1)==TRUE)
                 break;
-            posX += visX * 0.1;
-            posZ += visZ * 0.1;
+            if(dansPlateau(posX+visX*0.1,posZ+visZ*0.1)==TRUE){
+            	posX += visX * 0.1;
+        	    posZ += visZ * 0.1;
+            }
             break;
         case 's' : // Risque de poser des problemes lors du 4-arbre
             if(appartient(posX-visX*0.1,posZ-visZ*0.1)==TRUE)
                 break;
-            posX -= visX * 0.1;
-            posZ -= visZ * 0.1;
+            if(dansPlateau(posX-visX*0.1,posZ-visZ*0.1)==TRUE){
+          	  	posX -= visX * 0.1;
+            	posZ -= visZ * 0.1;
+            }
             break;
 	}
 
@@ -103,6 +118,17 @@ void carre(float x,float y,float z, float l) //Coordonnées du coté bas gauche 
     glVertex3f(x+l,y,z);
     glVertex3f(x+l,y+l,z);
     glVertex3f(x,y+l,z);
+    glEnd();
+}
+
+void plateau(float x,float y,float z, float lar, float lon) //Coordonnées du coté bas gauche, largeur et longueur
+{
+    glColor3f(0.7,0.7,0.7);
+    glBegin(GL_QUADS);
+    glVertex3f(x,y,z);
+    glVertex3f(x+lar,y,z);
+    glVertex3f(x+lar,y,z+lon);
+    glVertex3f(x,y,z+lon);
     glEnd();
 }
 
@@ -230,6 +256,9 @@ void Affichage(){
   //Fin de mise en place de l'observateur
 
   gluLookAt(posX,1,posZ, posX+visX,1,posZ+visZ, 0,1,0);
+
+  //Creation du plateau
+  plateau(-52,0,-55,104,108);
 
   //Decor();
   Immeuble(-1,0,-6);

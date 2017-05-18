@@ -27,6 +27,8 @@ typedef struct tabletotale
 
 int appartient(float xP, float zP);
 
+int dansPlateau(float xp, float zp);
+
 void clavier(unsigned char touche, int x, int y);
 
 void mouvement();
@@ -34,6 +36,8 @@ void mouvement();
 void parallepipede(float x1, float y1, float z1, float x2, float y2, float z2);
 
 void carre(float x,float y,float z, float l);
+
+void plateau(float x,float y,float z, float lar, float lon);
 
 void pyramide(float x, float y, float z);
 
