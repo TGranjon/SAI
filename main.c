@@ -1,18 +1,19 @@
 #include "main.h"
-
+// Pour les déplacements
 float angle=0;
 float posX=0;
 float posZ=-1;
 float visX=0;
 float visZ=5;
+//Limite de déplacement
 float minX=-52;
 float maxX=52;
 float minZ=-55;
 float maxZ=53;
-TableTotale tableT;
-int objectif_liste[10];
+TableTotale tableT; // Liste des carrés de collision
+int objectif_liste[10]; // Booléen objectif trouvé
 
-int appartient(float xP, float zP)
+int appartient(float xP, float zP) // Est ce que le point(xP,0,zP) appartient à un objet
 {
     int a;
     for(a=0;a<tableT.taille;a++)
@@ -26,14 +27,14 @@ int appartient(float xP, float zP)
     return FALSE;
 }
 
-int dansPlateau(float xp, float zp){
+int dansPlateau(float xp, float zp){ // Est ce que le point(xP,0,zP) est dans le plateau
 	if(xp>=minX && xp<=maxX && zp>=minZ && zp<=maxZ){
 		return TRUE;
 	}
 	return FALSE;
 }
 
-void clavier(unsigned char touche, int x, int y)
+void clavier(unsigned char touche, int x, int y) // Fonction de gestion du clavier
 {
     switch(touche)
     {
@@ -66,7 +67,7 @@ void clavier(unsigned char touche, int x, int y)
 	}
 }
 
-void mouvement()
+void mouvement() // Idle function
 {
     glutKeyboardFunc(clavier);
     glutPostRedisplay();
@@ -154,7 +155,7 @@ void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche
 
 }
 
-void Decor()
+void Decor() //! A adapter au plateau
 {
   glBegin(GL_QUADS);
   //Fond bleu
@@ -250,8 +251,8 @@ void Affichage(){
 
   //Creation du plateau
   plateau(-52,0,-55,104,108);
-
   //Decor();
+
   Immeuble(-3,0,-8);
   Arbre(5,0,0,1);
   Bonhomme(0,0,5);
@@ -279,7 +280,7 @@ int main(int argc, char * argv[], char * envp[]){
   glutDisplayFunc(Affichage);
   glutIdleFunc(mouvement);
 
-
+  // Initialisation des figures et des collisions
   tableT.forme[tableT.taille].minP.x=-3; //Immeuble
   tableT.forme[tableT.taille].minP.z=-8;
   tableT.forme[tableT.taille].maxP.x=2;
