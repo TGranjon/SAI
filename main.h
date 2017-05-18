@@ -44,6 +44,8 @@ void Arbre(float x, float y, float z, float r);
 
 void Lampadaire(float x, float y, float z);
 
+void Objectif(float x, float y, float z, int num);
+
 void Affichage();
 
 int main(int argc, char * argv[], char * envp[]);
