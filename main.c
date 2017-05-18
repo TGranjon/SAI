@@ -6,7 +6,7 @@ float posZ=-1;
 float visX=0;
 float visZ=5;
 TableTotale tableT;
-int objectif[10];
+int objectif_liste[10];
 
 int appartient(float xP, float zP)
 {
@@ -216,7 +216,7 @@ void Objectif(float x, float y, float z, int num) //Coordonées du centre et num
     glTranslatef(x,y,z);
     glutSolidSphere(0.6,10,10);
     glPopMatrix();
-    objectif[num]=1; //Signifie que l'objectif est encore présent (non trouvé)
+    objectif_liste[num]=1; //Signifie que l'objectif est encore présent (non trouvé)
 }
 
 void Affichage(){
@@ -254,7 +254,7 @@ int main(int argc, char * argv[], char * envp[]){
   int i;
   for(i=0;i<10;i++)
   {
-      objectif[i]=0;
+      objectif_liste[i]=0;
   }
   glutInit(&argc,argv);
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
