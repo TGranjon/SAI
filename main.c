@@ -10,8 +10,8 @@ float minX=-52;
 float maxX=52;
 float minZ=-55;
 float maxZ=53;
-//Nombre d'objet généré aléatoirement
-int nbObjets=15; // Peut etre changé
+
+int nbObjets=15; //Nombre d'objet généré aléatoirement (peut etre changé)
 TableTotale tableT; // Liste des carrés de collision
 TableObjectif objectif_liste[10]; // Liste des objectifs
 
@@ -43,7 +43,8 @@ int toucheObjectif(float xP, float zP) // Quel objectif est touché par le joueu
     return -1;
 }
 
-int dansPlateau(float xp, float zp){ // Est ce que le point(xP,0,zP) est dans le plateau
+int dansPlateau(float xp, float zp) // Est ce que le point(xP,0,zP) est dans le plateau
+{
 	if(xp>=minX && xp<=maxX && zp>=minZ && zp<=maxZ){
 		return TRUE;
 	}
@@ -66,23 +67,25 @@ void clavier(unsigned char touche, int x, int y) // Fonction de gestion du clavi
             visZ = -cos(angle);
             break;
         case 'z' :
-            if(appartient(posX+visX*0.1,posZ+visZ*0.1)==TRUE)
+            if(appartient(posX+visX*0.1,posZ+visZ*0.1)==TRUE) // Rentre dans un objet solide ?
                 break;
-            o=toucheObjectif(posX+visX*0.1,posZ+visZ*0.1);
+            o=toucheObjectif(posX+visX*0.1,posZ+visZ*0.1); // Rentre dans un objectif ?
             if(o>-1)
                 objectif_liste[o].cache=FALSE;
-            if(dansPlateau(posX+visX*0.1,posZ+visZ*0.1)==TRUE){
+            if(dansPlateau(posX+visX*0.1,posZ+visZ*0.1)==TRUE) // Sort du plateau ?
+            {
             	posX += visX * 0.1;
         	    posZ += visZ * 0.1;
             }
             break;
         case 's' : // Risque de poser des problemes lors du 4-arbre
-            if(appartient(posX-visX*0.1,posZ-visZ*0.1)==TRUE)
+            if(appartient(posX-visX*0.1,posZ-visZ*0.1)==TRUE) // Rentre dans un objet solide
                 break;
-            o=toucheObjectif(posX-visX*0.1,posZ-visZ*0.1);
+            o=toucheObjectif(posX-visX*0.1,posZ-visZ*0.1); // Rentre dans un objectif
             if(o>-1)
                 objectif_liste[o].cache=FALSE;
-            if(dansPlateau(posX-visX*0.1,posZ-visZ*0.1)==TRUE){
+            if(dansPlateau(posX-visX*0.1,posZ-visZ*0.1)==TRUE) // Sort du plateau ?
+            {
           	  	posX -= visX * 0.1;
             	posZ -= visZ * 0.1;
             }
@@ -178,7 +181,7 @@ void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche
     glEnd();
 }
 
-void Decor(float x, float y, float z, float lar, float lon) //! A adapter au plateau
+void Decor(float x, float y, float z, float lar, float lon) // Cree le ciel
 {
   glBegin(GL_QUADS);
   //Fond bleu
@@ -213,7 +216,7 @@ void Decor(float x, float y, float z, float lar, float lon) //! A adapter au pla
 
 void Bonhomme(float x, float y, float z) //Coordonnées du coté bas gauche du pied gauche
 {
-    glColor3ub(255,255,255); //On pourra changer le couleur pour chaque pnj
+    glColor3ub(255,255,255);
     parallepipede(x,y,z,x+1,y+2,z+1); //Pied gauche
     parallepipede(x+2,y,z,x+3,y+2,z+1); //Pied droit
     parallepipede(x,y+2,z,x+3,y+4,z+1); //Torse
@@ -376,7 +379,7 @@ int main(int argc, char * argv[], char * envp[]){
     	break;
     }
   }
-  for(i=0;i<10;i++)
+  for(i=0;i<10;i++) // Initialisation des objectifs
   {
       do{
         x=(rand()%(104)+1)-52;

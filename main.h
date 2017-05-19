@@ -7,25 +7,25 @@
 #define TRUE 1
 #define FALSE 0
 
-typedef struct point
+typedef struct point // Structure Point(x,z)
 {
     float x;
     float z;
 } Point;
 
-typedef struct tableforme
+typedef struct tableforme // Structure TableForme(minP,maxP)
 {
     Point minP;
     Point maxP;
 } TableForme;
 
-typedef struct tabletotale
+typedef struct tabletotale // Structure TableTotale(taille, forme[])
 {
     int taille;
     TableForme forme[21]; // A determiner avec le 4-arbre
 } TableTotale;
 
-typedef struct tableobjectif
+typedef struct tableobjectif // Structure TableObjectif(cache,coordonnees)
 {
     int cache;
     Point coordonnees;
