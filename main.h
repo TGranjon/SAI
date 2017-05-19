@@ -59,6 +59,12 @@ int dansPlateau(float xp, float zp);
 
 int pnpoly(int nvert, Point vert[], float testx, float testy);
 
+int inclus(Point A[]);
+
+int contenu(Point A[]);
+
+arbre Arbre4(Point A[]);
+
 void objectifFin();
 
 void vBitmapOutput(int x, int y, char *string, void *font);

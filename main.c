@@ -55,25 +55,103 @@ int dansPlateau(float xp, float zp) // Est ce que le point(xP,0,zP) est dans le 
 	return FALSE;
 }
 
-int pnpoly(int nvert, Point vert[], float testx, float testy) // Est ce que le point(x,y) est dans un polygone (0 = non, 1 = oui)
+int pnpoly(int nvert, Point vert[], float testx, float testz) // Est ce que le point(x,y) est dans un polygone (0 = non, 1 = oui)
 // nvert est le nombre de cotés
 // vert est le polygone
-// testx et testy sont les coordonnees du point a tester
+// testx et testz sont les coordonnees du point a tester
 {
   int i, j, c = 0;
   float vertx[nvert];
-  float verty[nvert];
+  float vertz[nvert];
   for(i=0;i<nvert;i++)
   {
       vertx[i]=vert[i].x;
-      verty[i]=vert[i].z;
+      vertz[i]=vert[i].z;
   }
   for (i = 0, j = nvert-1; i < nvert; j = i++) {
-    if ( ((verty[i]>testy) != (verty[j]>testy)) &&
-     (testx < (vertx[j]-vertx[i]) * (testy-verty[i]) / (verty[j]-verty[i]) + vertx[i]) )
+    if ( ((vertz[i]>testz) != (vertz[j]>testz)) &&
+     (testx < (vertx[j]-vertx[i]) * (testz-vertz[i]) / (vertz[j]-vertz[i]) + vertx[i]) )
        c = !c;
   }
   return c;
+}
+
+int inclus(Point A[]) //Est ce que le FOV est inclus dans A
+{
+    int i;
+    for(i=0;i<4;i++)
+    {
+        if(pnpoly(4,A,fov[i].x,fov[i].z)==1)
+            return TRUE; // Le FOV est dans A -> contenu()
+    }
+    return FALSE; // Le FOV n'est pas dans A -> Arbre VIDE
+}
+
+int contenu(Point A[]) // Est ce que A est contenu dans le FOV
+{
+    int i;
+    int c=0;
+    for(i=0;i<4;i++)
+    {
+        if(pnpoly(4,fov,A[i].x,A[i].z)==1)
+            c++;
+    }
+    if(c==4)
+        return 3; // A est intégralement dans le FOV -> Arbre PLEIN
+    if(c>0)
+        return 2; // A est partiellement dans le FOV -> Arbre INTER
+    return 1; // A n'est pas dans le FOV -> Arbre VIDE
+}
+
+arbre Arbre4(Point A[]) // Cree le 4-arbre qui represente ce qui est vu par le joueur
+{
+    if(inclus(A)==FALSE)
+        return ConsArbre(VIDE,ArbreVide(),ArbreVide(),ArbreVide(),ArbreVide());
+    if(contenu(A)==3)
+        return ConsArbre(PLEIN,ArbreVide(),ArbreVide(),ArbreVide(),ArbreVide());
+    if(contenu(A)==1)
+        return ConsArbre(VIDE,ArbreVide(),ArbreVide(),ArbreVide(),ArbreVide());
+    if(contenu(A)==2)
+    {
+        Point B1[4], B2[4], B3[4], B4[4];
+        B1[0].x=A[0].x;
+        B1[0].z=A[0].z;
+        B1[1].x=A[0].x;
+        B1[1].z=A[1].z-A[0].z;
+        B1[2].x=A[3].x-A[0].x;
+        B1[2].z=A[1].z-A[0].z;
+        B1[3].x=A[3].x-A[0].x;
+        B1[3].z=A[0].z;
+
+        B2[0].x=A[0].x;
+        B2[0].z=A[1].z-A[0].z;
+        B2[1].x=A[0].x;
+        B2[1].z=A[1].z;
+        B2[2].x=A[3].x-A[0].x;
+        B2[2].z=A[1].z;
+        B2[3].x=A[3].x-A[0].x;
+        B2[3].z=A[1].z-A[0].z;
+
+        B3[0].x=A[3].x-A[0].x;
+        B3[0].z=A[1].z-A[0].z;
+        B3[1].x=A[3].x-A[0].x;
+        B3[1].z=A[1].z;
+        B3[2].x=A[3].x;
+        B3[2].z=A[1].z;
+        B3[3].x=A[3].x;
+        B3[3].z=A[1].z-A[0].z;
+
+        B4[0].x=A[3].x-A[0].x;
+        B4[0].z=A[0].z;
+        B4[1].x=A[3].x-A[0].x;
+        B4[1].z=A[1].z-A[0].z;
+        B4[2].x=A[3].x;
+        B4[2].z=A[1].z-A[0].z;
+        B4[3].x=A[3].x;
+        B4[3].z=A[0].z;
+        return ConsArbre(INTER,Arbre4(B1),Arbre4(B2),Arbre4(B3),Arbre4(B4));
+    }
+    return ArbreVide(); // Cas d'erreur
 }
 
 void objectifFin() //Est ce que tous les objectifs ont ete trouves
