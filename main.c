@@ -17,6 +17,7 @@ TableObjetTotale tabObj;//Tableau contenant les objets
 arbre Ar;
 TableTotale tableT; // Liste des carrés de collision
 TableObjectif objectif_liste[NBOBJECTIF]; // Liste des objectifs
+Point fov[4];
 
 int appartient(float xP, float zP) // Est ce que le point(xP,0,zP) appartient à un objet
 {
@@ -54,6 +55,27 @@ int dansPlateau(float xp, float zp) // Est ce que le point(xP,0,zP) est dans le 
 	return FALSE;
 }
 
+int pnpoly(int nvert, Point vert[], float testx, float testy) // Est ce que le point(x,y) est dans un polygone (0 = non, 1 = oui)
+// nvert est le nombre de cotés
+// vert est le polygone
+// testx et testy sont les coordonnees du point a tester
+{
+  int i, j, c = 0;
+  float vertx[nvert];
+  float verty[nvert];
+  for(i=0;i<nvert;i++)
+  {
+      vertx[i]=vert[i].x;
+      verty[i]=vert[i].z;
+  }
+  for (i = 0, j = nvert-1; i < nvert; j = i++) {
+    if ( ((verty[i]>testy) != (verty[j]>testy)) &&
+     (testx < (vertx[j]-vertx[i]) * (testy-verty[i]) / (verty[j]-verty[i]) + vertx[i]) )
+       c = !c;
+  }
+  return c;
+}
+
 void objectifFin() //Est ce que tous les objectifs ont ete trouves
 {
 	int i,finJeu = TRUE;
@@ -74,7 +96,7 @@ void vBitmapOutput(int x, int y, char *string, void *font)
 	glRasterPos2f(x,y); // Positionne le premier caractère de la chaîne
 	len = (int) strlen(string); // Calcule la longueur de la chaîne
 	for (i = 0; i < len; i++){ // Affiche chaque caractère de la chaîne
-	 glutBitmapCharacter(font,string[i]); 
+	 glutBitmapCharacter(font,string[i]);
 	}
 }
 
@@ -314,9 +336,9 @@ void Affichage(){
 
 	  //Creation du plateau
 	  plateau(-52,0,-55,104,108);
-	  
+
 	  //Decor();
-	  
+
 	  //Affichage des objets générés aléatoirement
 	  int typeObjet, j;
 	  float x,y,z,r;
@@ -357,7 +379,7 @@ void Affichage(){
 	  		Objectif(objectif_liste[i].coordonnees.x,1,objectif_liste[i].coordonnees.z,i);
 	  	}
 	  }
-	  	  
+
 	//Le jeu est fini
 	}else if(perdu == TRUE){
 		glColor3d(0.5,0.5,0.5);
@@ -491,6 +513,16 @@ int main(int argc, char * argv[], char * envp[]){
   posZ=z;
   visX=sin(angle);
   visZ=-cos(angle);
+
+  // Calcul FOV
+  fov[0].x=posX+visX-1; // Bas gauche
+  fov[0].z=posZ+visZ+0.5;
+  fov[1].x=posX+visX+1; // Bas droit
+  fov[1].z=posZ+visZ+0.5;
+  fov[2].x=posX+visX+80; // Haut droit
+  fov[2].z=posZ+visZ+40;
+  fov[3].x=posX+visX-80; // Haut gauche
+  fov[3].z=posZ+visZ+40;
 
   // Timer
   glutTimerFunc(60000,gameOver,0); // 60000 ms = 1 min //! Determiner quel est le meilleur temps
