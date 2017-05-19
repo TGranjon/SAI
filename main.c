@@ -13,7 +13,7 @@ float maxZ=53;
 //Nombre d'objet généré aléatoirement
 int nbObjets=15; // Peut etre changé
 TableTotale tableT; // Liste des carrés de collision
-int objectif_liste[10]; // Booléen objectif trouvé
+TableObjectif objectif_liste[10]; // Liste des objectifs
 
 int appartient(float xP, float zP) // Est ce que le point(xP,0,zP) appartient à un objet
 {
@@ -239,7 +239,7 @@ void Objectif(float x, float y, float z, int num) //Coordonées du centre et num
     glTranslatef(x,y,z);
     glutSolidSphere(0.6,10,10);
     glPopMatrix();
-    objectif_liste[num]=TRUE; //Signifie que l'objectif est encore présent (non trouvé)
+    objectif_liste[num].trouve=TRUE; //Signifie que l'objectif est encore présent (non trouvé)
 }
 
 void Affichage(){
@@ -269,11 +269,7 @@ void Affichage(){
 int main(int argc, char * argv[], char * envp[]){
 
   tableT.taille=0;
-  int i;
-  for(i=0;i<10;i++)
-  {
-      objectif_liste[i]=FALSE;
-  }
+
   glutInit(&argc,argv);
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
   glutInitWindowSize(600,600);
@@ -289,6 +285,7 @@ int main(int argc, char * argv[], char * envp[]){
 
   //Generation des objets
   float x,y,z,r;
+  int i;
 
   //Boucle de creation des nbObjets objets
   for(i=0; i<nbObjets; i++){
@@ -357,6 +354,16 @@ int main(int argc, char * argv[], char * envp[]){
     default:
     	break;
     }
+  }
+  for(i=0;i<10;i++)
+  {
+      do{
+        x=(rand()%(104)+1)-52;
+        z=(rand()%(108)+1)-55;
+      }while(appartient(x,z)==TRUE);
+      objectif_liste[i].trouve=FALSE;
+      objectif_liste[i].coordonnees.x=x;
+      objectif_liste[i].coordonnees.z=z;
   }
 
   glutMainLoop();

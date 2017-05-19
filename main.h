@@ -25,6 +25,12 @@ typedef struct tabletotale
     TableForme forme[21]; // A determiner avec le 4-arbre
 } TableTotale;
 
+typedef struct tableobjectif
+{
+    int trouve;
+    Point coordonnees;
+} TableObjectif;
+
 int appartient(float xP, float zP);
 
 int dansPlateau(float xp, float zp);
@@ -51,7 +57,7 @@ void Arbre(float x, float y, float z, float r);
 
 void Lampadaire(float x, float y, float z);
 
-void objectif(float x, float y, float z, int num);
+void Objectif(float x, float y, float z, int num);
 
 void Affichage();
 
