@@ -10,10 +10,12 @@ float minX=-52;
 float maxX=52;
 float minZ=-55;
 float maxZ=53;
+
 TableTotale tableT; // Liste des carrés de collision
-int objectif_liste[10]; // Booléen objectif trouvé
 TableObjetTotale tabObj;//Tableau contenant les objets
-int tailleTabObj=0;
+arbre Ar;
+TableTotale tableT; // Liste des carrés de collision
+TableObjectif objectif_liste[10]; // Liste des objectifs
 
 int appartient(float xP, float zP) // Est ce que le point(xP,0,zP) appartient à un objet
 {
@@ -29,7 +31,22 @@ int appartient(float xP, float zP) // Est ce que le point(xP,0,zP) appartient à
     return FALSE;
 }
 
-int dansPlateau(float xp, float zp){ // Est ce que le point(xP,0,zP) est dans le plateau
+int toucheObjectif(float xP, float zP) // Quel objectif est touché par le joueur
+{
+    int i;
+    for(i=0;i<10;i++)
+    {
+        if((xP>=objectif_liste[i].coordonnees.x-0.6)&&(xP<=objectif_liste[i].coordonnees.x+0.6))
+        {
+            if((zP>=objectif_liste[i].coordonnees.z-0.6)&&(zP<=objectif_liste[i].coordonnees.z+0.6))
+                return i;
+        }
+    }
+    return -1;
+}
+
+int dansPlateau(float xp, float zp) // Est ce que le point(xP,0,zP) est dans le plateau
+{
 	if(xp>=minX && xp<=maxX && zp>=minZ && zp<=maxZ){
 		return TRUE;
 	}
@@ -38,6 +55,7 @@ int dansPlateau(float xp, float zp){ // Est ce que le point(xP,0,zP) est dans le
 
 void clavier(unsigned char touche, int x, int y) // Fonction de gestion du clavier
 {
+    int o;
     switch(touche)
     {
         case 'q' :
@@ -51,17 +69,25 @@ void clavier(unsigned char touche, int x, int y) // Fonction de gestion du clavi
             visZ = -cos(angle);
             break;
         case 'z' :
-            if(appartient(posX+visX*0.1,posZ+visZ*0.1)==TRUE)
+            if(appartient(posX+visX*0.1,posZ+visZ*0.1)==TRUE) // Rentre dans un objet solide ?
                 break;
-            if(dansPlateau(posX+visX*0.1,posZ+visZ*0.1)==TRUE){
+            o=toucheObjectif(posX+visX*0.1,posZ+visZ*0.1); // Rentre dans un objectif ?
+            if(o>-1)
+                objectif_liste[o].cache=FALSE;
+            if(dansPlateau(posX+visX*0.1,posZ+visZ*0.1)==TRUE) // Sort du plateau ?
+            {
             	posX += visX * 0.1;
         	    posZ += visZ * 0.1;
             }
             break;
         case 's' : // Risque de poser des problemes lors du 4-arbre
-            if(appartient(posX-visX*0.1,posZ-visZ*0.1)==TRUE)
+            if(appartient(posX-visX*0.1,posZ-visZ*0.1)==TRUE) // Rentre dans un objet solide
                 break;
-            if(dansPlateau(posX-visX*0.1,posZ-visZ*0.1)==TRUE){
+            o=toucheObjectif(posX-visX*0.1,posZ-visZ*0.1); // Rentre dans un objectif
+            if(o>-1)
+                objectif_liste[o].cache=FALSE;
+            if(dansPlateau(posX-visX*0.1,posZ-visZ*0.1)==TRUE) // Sort du plateau ?
+            {
           	  	posX -= visX * 0.1;
             	posZ -= visZ * 0.1;
             }
@@ -130,6 +156,7 @@ void plateau(float x,float y,float z, float lar, float lon) //Coordonnées du co
     glVertex3f(x+lar,y,z+lon);
     glVertex3f(x,y,z+lon);
     glEnd();
+    Decor(x,y,z,lar,lon); //! A adapter au champ de vue
 }
 
 void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche du pied de la pyramide
@@ -156,38 +183,42 @@ void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche
     glEnd();
 }
 
-void Decor() //! A adapter au plateau
+void Decor(float x, float y, float z, float lar, float lon) // Cree le ciel
 {
   glBegin(GL_QUADS);
   //Fond bleu
   glColor3f(0,0.4,0.8);
-  glVertex3f(-5,0,-5);
-  glVertex3f(-5,5,-5);
-  glVertex3f(-5,5,5);
-  glVertex3f(-5,0,5);
-  glVertex3f(-5,0,5);
-  glVertex3f(-5,5,5);
-  glVertex3f(5,5,5);
-  glVertex3f(5,0,5);
-  glVertex3f(5,0,5);
-  glVertex3f(5,5,5);
-  glVertex3f(5,5,-5);
-  glVertex3f(5,0,-5);
-  glVertex3f(5,0,-5);
-  glVertex3f(5,5,-5);
-  glVertex3f(-5,5,-5);
-  glVertex3f(-5,0,-5);
-  glVertex3f(-5,5,-5);
-  glVertex3f(5,5,-5);
-  glVertex3f(5,5,5);
-  glVertex3f(-5,5,5);
+  glVertex3f(x,y,z);
+  glVertex3f(x,y+10,z);
+  glVertex3f(x+lar,y+10,z);
+  glVertex3f(x+lar,y,z);
+
+  glVertex3f(x,y,z);
+  glVertex3f(x,y+10,z);
+  glVertex3f(x,y+10,z+lon);
+  glVertex3f(x,y,z+lon);
+
+  glVertex3f(x,y,z+lon);
+  glVertex3f(x,y+10,z+lon);
+  glVertex3f(x+lar,y+10,z+lon);
+  glVertex3f(x+lar,y,z+lon);
+
+  glVertex3f(x+lar,y,z);
+  glVertex3f(x+lar,y+10,z);
+  glVertex3f(x+lar,y+10,z+lon);
+  glVertex3f(x+lar,y,z+lon);
+
+  glVertex3f(x,y+10,z);
+  glVertex3f(x+lar,y+10,z);
+  glVertex3f(x+lar,y+10,z+lon);
+  glVertex3f(x,y+10,z+lon);
   glEnd();
 
 }
 
 void Bonhomme(float x, float y, float z) //Coordonnées du coté bas gauche du pied gauche
 {
-    glColor3ub(255,255,255); //On pourra changer le couleur pour chaque pnj
+    glColor3ub(255,255,255);
     parallepipede(x,y,z,x+1,y+2,z+1); //Pied gauche
     parallepipede(x+2,y,z,x+3,y+2,z+1); //Pied droit
     parallepipede(x,y+2,z,x+3,y+4,z+1); //Torse
@@ -234,7 +265,7 @@ void Objectif(float x, float y, float z, int num) //Coordonées du centre et num
     glTranslatef(x,y,z);
     glutSolidSphere(0.6,10,10);
     glPopMatrix();
-    objectif_liste[num]=TRUE; //Signifie que l'objectif est encore présent (non trouvé)
+    objectif_liste[num].cache=TRUE; //Signifie que l'objectif est encore présent (non trouvé)
 }
 
 void Affichage(){
@@ -251,6 +282,7 @@ void Affichage(){
 
   //Creation du plateau
   plateau(-52,0,-55,104,108);
+
   //Decor();
   
   //Affichage des objets générés aléatoirement
@@ -296,11 +328,8 @@ int main(int argc, char * argv[], char * envp[]){
 
   tableT.taille=0;
   tabObj.taille=0;
-  int i;
-  for(i=0;i<10;i++)
-  {
-      objectif_liste[i]=FALSE;
-  }
+  Ar = ArbreVide();
+
   glutInit(&argc,argv);
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
   glutInitWindowSize(600,600);
@@ -311,10 +340,9 @@ int main(int argc, char * argv[], char * envp[]){
   glutDisplayFunc(Affichage);
   glutIdleFunc(mouvement);
 
-  
-
   //Generation des objets
   float x,y,z,r;
+  int i;
 
   //Boucle de creation des NBOBJET objets
   for(i=0; i<NBOBJET; i++){
@@ -340,7 +368,6 @@ int main(int argc, char * argv[], char * envp[]){
         tableT.forme[tableT.taille].maxP.x=x+5;
         tableT.forme[tableT.taille].maxP.z=z+5;
         
-        fprintf(stdout, "X :%f Z :%f\n Immeuble collision : x=%f z=%f\n objet : x=%f z=%f\n",x,z, tableT.forme[tableT.taille].minP.x, tableT.forme[tableT.taille].minP.z, tabObj.objet[tabObj.taille].x, tabObj.objet[tabObj.taille].z);
         tabObj.taille++;
         tableT.taille++;
    		break;
@@ -365,9 +392,7 @@ int main(int argc, char * argv[], char * envp[]){
         tableT.forme[tableT.taille].minP.z=z;
         tableT.forme[tableT.taille].maxP.x=x+r;
         tableT.forme[tableT.taille].maxP.z=z+r;
-        
-        fprintf(stdout, "X :%f Z :%f\n Arbre collision : x=%f z=%f\n objet : x=%f z=%f\n",x,z, tableT.forme[tableT.taille].minP.x, tableT.forme[tableT.taille].minP.z, tabObj.objet[tabObj.taille].x, tabObj.objet[tabObj.taille].z);
-        
+
         tabObj.taille++;
         tableT.taille++;
     	break;
@@ -389,8 +414,6 @@ int main(int argc, char * argv[], char * envp[]){
         tableT.forme[tableT.taille].maxP.x=x+0.5;
         tableT.forme[tableT.taille].maxP.z=z+0.5;
         
-        fprintf(stdout, "X :%f Z :%f\n Lampadaire collision : x=%f z=%f\n objet : x=%f z=%f\n",x,z, tableT.forme[tableT.taille].minP.x, tableT.forme[tableT.taille].minP.z, tabObj.objet[tabObj.taille].x, tabObj.objet[tabObj.taille].z);
-        
         tabObj.taille++;
         tableT.taille++;
     	break;
@@ -398,11 +421,27 @@ int main(int argc, char * argv[], char * envp[]){
     	break;
     }
   }
-  /*
-  for(int k=0; k<tableT.taille;k++){
-  	fprintf(stdout, "collision : x=%f z=%f\nobjet : x=%f z=%f\n", tableT.forme[k].minP.x, tableT.forme[k].minP.z, tabObj[k].x, tabObj[k].z);
+
+  for(i=0;i<10;i++) // Initialisation des objectifs
+  {
+      do{
+        x=(rand()%(104)+1)-52;
+        z=(rand()%(108)+1)-55;
+      }while(appartient(x,z)==TRUE);
+      objectif_liste[i].cache=FALSE;
+      objectif_liste[i].coordonnees.x=x;
+      objectif_liste[i].coordonnees.z=z;
   }
-  */
+  // Initialisation position joueur
+  do{
+      x=(rand()%(104)+1)-52;
+      z=(rand()%(108)+1)-55;
+  }while((appartient(x,z)==TRUE)&&(toucheObjectif(x,z)==TRUE));
+  posX=x;
+  posZ=z;
+  visX=sin(angle);
+  visZ=-cos(angle);
+
   glutMainLoop();
   return 0;
 }
