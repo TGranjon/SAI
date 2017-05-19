@@ -301,7 +301,6 @@ void Objectif(float x, float y, float z, int num) //Coordonées du centre et num
 void Affichage(){
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-<<<<<<< HEAD
   if(finDuJeu == FALSE){
 
 	  glMatrixMode(GL_PROJECTION);
