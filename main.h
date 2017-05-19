@@ -82,4 +82,6 @@ void Objectif(float x, float y, float z, int num);
 
 void Affichage();
 
+void gameOver();
+
 int main(int argc, char * argv[], char * envp[]);

@@ -265,7 +265,6 @@ void Objectif(float x, float y, float z, int num) //Coordonées du centre et num
     glTranslatef(x,y,z);
     glutSolidSphere(0.6,10,10);
     glPopMatrix();
-    objectif_liste[num].cache=TRUE; //Signifie que l'objectif est encore présent (non trouvé)
 }
 
 void Affichage(){
@@ -284,7 +283,7 @@ void Affichage(){
   plateau(-52,0,-55,104,108);
 
   //Decor();
-  
+
   //Affichage des objets générés aléatoirement
   int typeObjet, j;
   float x,y,z,r;
@@ -313,15 +312,15 @@ void Affichage(){
 			break;
 		}
   }
-  /*
-  Immeuble(-3,0,-8);
-  Arbre(5,0,0,1);
-  Bonhomme(0,0,5);
-  Lampadaire(-5,0,0);
-  */
   Objectif(0,1,2,0);
 
   glutSwapBuffers();
+}
+
+void gameOver()
+{
+    fprintf(stdout,"Game Over\n");
+    //exit(0); //! Trouver autre chose
 }
 
 int main(int argc, char * argv[], char * envp[]){
@@ -362,12 +361,12 @@ int main(int argc, char * argv[], char * envp[]){
 		tabObj.objet[tabObj.taille].x=x;
 		tabObj.objet[tabObj.taille].y=y;
 		tabObj.objet[tabObj.taille].z=z;
-   		
+
    		tableT.forme[tableT.taille].minP.x=x;
         tableT.forme[tableT.taille].minP.z=z;
         tableT.forme[tableT.taille].maxP.x=x+5;
         tableT.forme[tableT.taille].maxP.z=z+5;
-        
+
         tabObj.taille++;
         tableT.taille++;
    		break;
@@ -387,7 +386,7 @@ int main(int argc, char * argv[], char * envp[]){
 		tabObj.objet[tabObj.taille].y=y;
 		tabObj.objet[tabObj.taille].z=z;
 		tabObj.objet[tabObj.taille].r=r;
-   		
+
     	tableT.forme[tableT.taille].minP.x=x;
         tableT.forme[tableT.taille].minP.z=z;
         tableT.forme[tableT.taille].maxP.x=x+r;
@@ -413,7 +412,7 @@ int main(int argc, char * argv[], char * envp[]){
         tableT.forme[tableT.taille].minP.z=z;
         tableT.forme[tableT.taille].maxP.x=x+0.5;
         tableT.forme[tableT.taille].maxP.z=z+0.5;
-        
+
         tabObj.taille++;
         tableT.taille++;
     	break;
@@ -428,7 +427,7 @@ int main(int argc, char * argv[], char * envp[]){
         x=(rand()%(104)+1)-52;
         z=(rand()%(108)+1)-55;
       }while(appartient(x,z)==TRUE);
-      objectif_liste[i].cache=FALSE;
+      objectif_liste[i].cache=TRUE;
       objectif_liste[i].coordonnees.x=x;
       objectif_liste[i].coordonnees.z=z;
   }
@@ -441,6 +440,9 @@ int main(int argc, char * argv[], char * envp[]){
   posZ=z;
   visX=sin(angle);
   visZ=-cos(angle);
+
+  // Timer
+  glutTimerFunc(60000,gameOver,0); // 60000 ms = 1 min
 
   glutMainLoop();
   return 0;
