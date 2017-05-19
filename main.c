@@ -17,6 +17,7 @@ TableObjetTotale tabObj;//Tableau contenant les objets
 arbre Ar;
 TableTotale tableT; // Liste des carrés de collision
 TableObjectif objectif_liste[NBOBJECTIF]; // Liste des objectifs
+Point fov[4];
 
 int appartient(float xP, float zP) // Est ce que le point(xP,0,zP) appartient à un objet
 {
@@ -52,6 +53,105 @@ int dansPlateau(float xp, float zp) // Est ce que le point(xP,0,zP) est dans le 
 		return TRUE;
 	}
 	return FALSE;
+}
+
+int pnpoly(int nvert, Point vert[], float testx, float testz) // Est ce que le point(x,y) est dans un polygone (0 = non, 1 = oui)
+// nvert est le nombre de cotés
+// vert est le polygone
+// testx et testz sont les coordonnees du point a tester
+{
+  int i, j, c = 0;
+  float vertx[nvert];
+  float vertz[nvert];
+  for(i=0;i<nvert;i++)
+  {
+      vertx[i]=vert[i].x;
+      vertz[i]=vert[i].z;
+  }
+  for (i = 0, j = nvert-1; i < nvert; j = i++) {
+    if ( ((vertz[i]>testz) != (vertz[j]>testz)) &&
+     (testx < (vertx[j]-vertx[i]) * (testz-vertz[i]) / (vertz[j]-vertz[i]) + vertx[i]) )
+       c = !c;
+  }
+  return c;
+}
+
+int inclus(Point A[]) //Est ce que le FOV est inclus dans A
+{
+    int i;
+    for(i=0;i<4;i++)
+    {
+        if(pnpoly(4,A,fov[i].x,fov[i].z)==1)
+            return TRUE; // Le FOV est dans A -> contenu()
+    }
+    return FALSE; // Le FOV n'est pas dans A -> Arbre VIDE
+}
+
+int contenu(Point A[]) // Est ce que A est contenu dans le FOV
+{
+    int i;
+    int c=0;
+    for(i=0;i<4;i++)
+    {
+        if(pnpoly(4,fov,A[i].x,A[i].z)==1)
+            c++;
+    }
+    if(c==4)
+        return 3; // A est intégralement dans le FOV -> Arbre PLEIN
+    if(c>0)
+        return 2; // A est partiellement dans le FOV -> Arbre INTER
+    return 1; // A n'est pas dans le FOV -> Arbre VIDE
+}
+
+arbre Arbre4(Point A[]) // Cree le 4-arbre qui represente ce qui est vu par le joueur
+{
+    if(inclus(A)==FALSE)
+        return ConsArbre(VIDE,ArbreVide(),ArbreVide(),ArbreVide(),ArbreVide());
+    if(contenu(A)==3)
+        return ConsArbre(PLEIN,ArbreVide(),ArbreVide(),ArbreVide(),ArbreVide());
+    if(contenu(A)==1)
+        return ConsArbre(VIDE,ArbreVide(),ArbreVide(),ArbreVide(),ArbreVide());
+    if(contenu(A)==2)
+    {
+        Point B1[4], B2[4], B3[4], B4[4];
+        B1[0].x=A[0].x;
+        B1[0].z=A[0].z;
+        B1[1].x=A[0].x;
+        B1[1].z=A[1].z-A[0].z;
+        B1[2].x=A[3].x-A[0].x;
+        B1[2].z=A[1].z-A[0].z;
+        B1[3].x=A[3].x-A[0].x;
+        B1[3].z=A[0].z;
+
+        B2[0].x=A[0].x;
+        B2[0].z=A[1].z-A[0].z;
+        B2[1].x=A[0].x;
+        B2[1].z=A[1].z;
+        B2[2].x=A[3].x-A[0].x;
+        B2[2].z=A[1].z;
+        B2[3].x=A[3].x-A[0].x;
+        B2[3].z=A[1].z-A[0].z;
+
+        B3[0].x=A[3].x-A[0].x;
+        B3[0].z=A[1].z-A[0].z;
+        B3[1].x=A[3].x-A[0].x;
+        B3[1].z=A[1].z;
+        B3[2].x=A[3].x;
+        B3[2].z=A[1].z;
+        B3[3].x=A[3].x;
+        B3[3].z=A[1].z-A[0].z;
+
+        B4[0].x=A[3].x-A[0].x;
+        B4[0].z=A[0].z;
+        B4[1].x=A[3].x-A[0].x;
+        B4[1].z=A[1].z-A[0].z;
+        B4[2].x=A[3].x;
+        B4[2].z=A[1].z-A[0].z;
+        B4[3].x=A[3].x;
+        B4[3].z=A[0].z;
+        return ConsArbre(INTER,Arbre4(B1),Arbre4(B2),Arbre4(B3),Arbre4(B4));
+    }
+    return ArbreVide(); // Cas d'erreur
 }
 
 void objectifFin() //Est ce que tous les objectifs ont ete trouves
@@ -133,42 +233,6 @@ void mouvement() // Idle function
 {
 		glutKeyboardFunc(clavier);
 		glutPostRedisplay();
-}
-
-void parallepipede(float x1, float y1, float z1, float x2, float y2, float z2) //Coordonnées du coté bas gauche et du coté haut droit
-{
-    glBegin(GL_QUADS);
-    //Bas
-    glVertex3f(x1,y1,z1);
-    glVertex3f(x1,y1,z2);
-    glVertex3f(x2,y1,z2);
-    glVertex3f(x2,y1,z1);
-    //Face
-    glVertex3f(x1,y1,z1);
-    glVertex3f(x1,y2,z1);
-    glVertex3f(x2,y2,z1);
-    glVertex3f(x2,y1,z1);
-    //Gauche
-    glVertex3f(x1,y1,z1);
-    glVertex3f(x1,y1,z2);
-    glVertex3f(x1,y2,z2);
-    glVertex3f(x1,y2,z1);
-    //Arrière
-    glVertex3f(x1,y1,z2);
-    glVertex3f(x2,y1,z2);
-    glVertex3f(x2,y2,z2);
-    glVertex3f(x1,y2,z2);
-    //Droite
-    glVertex3f(x2,y1,z1);
-    glVertex3f(x2,y1,z2);
-    glVertex3f(x2,y2,z2);
-    glVertex3f(x2,y2,z1);
-    //Sommet
-    glVertex3f(x1,y2,z1);
-    glVertex3f(x1,y2,z2);
-    glVertex3f(x2,y2,z2);
-    glVertex3f(x2,y2,z1);
-    glEnd();
 }
 
 void carre(float x,float y,float z, float l) //Coordonnées du coté bas gauche et longueur d'un coté
@@ -312,10 +376,20 @@ void Affichage(){
 	  glFrustum(-1,1, -1,1, 0.5,40);
 	  //Fin de mise en place de l'observateur
 	  gluLookAt(posX,1,posZ, posX+visX,1,posZ+visZ, 0,1,0);
-	  
+
+	  // Calcul FOV
+      fov[0].x=posX+visX-1; // Bas gauche
+      fov[0].z=posZ+visZ+0.5;
+      fov[1].x=posX+visX+1; // Bas droit
+      fov[1].z=posZ+visZ+0.5;
+      fov[2].x=posX+visX+80; // Haut droit
+      fov[2].z=posZ+visZ+40;
+      fov[3].x=posX+visX-80; // Haut gauche
+      fov[3].z=posZ+visZ+40;
+
 	  //Creation du plateau
 	  plateau(-52,0,-55,104,108);
-	  
+
 	  //Affichage des objets générés aléatoirement
 	  int typeObjet, j;
 	  float x,y,z,r;
@@ -344,19 +418,13 @@ void Affichage(){
 				break;
 			}
 	  }
-	  /*
-	  Immeuble(-3,0,-8);
-	  Arbre(5,0,0,1);
-	  Bonhomme(0,0,5);
-	  Lampadaire(-5,0,0);
-	  */
 	  int i;
 	  for(i=0; i<NBOBJECTIF;i++){
 	  	if(objectif_liste[i].cache == TRUE){
 	  		Objectif(objectif_liste[i].coordonnees.x,1,objectif_liste[i].coordonnees.z,i);
 	  	}
 	  }
-	  	  
+
 	//Le jeu est fini
 	}else if(perdu == TRUE){
 		glColor3d(0.5,0.5,0.5);
@@ -490,6 +558,16 @@ int main(int argc, char * argv[], char * envp[]){
   posZ=z;
   visX=sin(angle);
   visZ=-cos(angle);
+
+  // Initialisation FOV
+  fov[0].x=posX+visX-1; // Bas gauche
+  fov[0].z=posZ+visZ+0.5;
+  fov[1].x=posX+visX+1; // Bas droit
+  fov[1].z=posZ+visZ+0.5;
+  fov[2].x=posX+visX+80; // Haut droit
+  fov[2].z=posZ+visZ+40;
+  fov[3].x=posX+visX-80; // Haut gauche
+  fov[3].z=posZ+visZ+40;
 
   // Timer
   glutTimerFunc(60000,gameOver,0); // 60000 ms = 1 min //! Determiner quel est le meilleur temps
