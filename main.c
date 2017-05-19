@@ -68,68 +68,71 @@ void objectifFin() //Est ce que tous les objectifs ont ete trouves
 }
 
 //Fonction d'affichage du message de fin
-void vBitmapOutput(int x, int y, char *string, void *font)
+void vBitmapOutput(int x, int z, char *string, void *font)
 {
 	int len,i; // len donne la longueur de la chaîne de caractères
-	glRasterPos2f(x,y); // Positionne le premier caractère de la chaîne
+	glRasterPos3f(x,0,z); // Positionne le premier caractère de la chaîne
 	len = (int) strlen(string); // Calcule la longueur de la chaîne
 	for (i = 0; i < len; i++){ // Affiche chaque caractère de la chaîne
-	 glutBitmapCharacter(font,string[i]); 
+	 glutBitmapCharacter(font,string[i]);
 	}
 }
 
 void clavier(unsigned char touche, int x, int y) // Fonction de gestion du clavier
 {
-    int o;
-    switch(touche)
-    {
-        case 'q' :
-            angle -= 0.05;
-            visX = sin(angle);
-            visZ = -cos(angle);
-            break;
-        case 'd' :
-            angle += 0.05;
-            visX = sin(angle);
-            visZ = -cos(angle);
-            break;
-        case 'z' :
-            if(appartient(posX+visX*0.3,posZ+visZ*0.3)==TRUE) // Rentre dans un objet solide ?
-                break;
-            o=toucheObjectif(posX+visX*0.3,posZ+visZ*0.3); // Rentre dans un objectif ?
-            if(o>-1)
-            {
-                objectif_liste[o].cache=FALSE;
-				objectifFin();
-		    }
-            if(dansPlateau(posX+visX*0.3,posZ+visZ*0.3)==TRUE) // Sort du plateau ?
-            {
-            	posX += visX * 0.3;
-        	    posZ += visZ * 0.3;
-            }
-            break;
-        case 's' : // Risque de poser des problemes lors du 4-arbre
-            if(appartient(posX-visX*0.3,posZ-visZ*0.3)==TRUE) // Rentre dans un objet solide
-                break;
-            o=toucheObjectif(posX-visX*0.3,posZ-visZ*0.3); // Rentre dans un objectif
-            if(o>-1)
-            {
-                objectif_liste[o].cache=FALSE;
-				objectifFin();
-		    }
-            if(dansPlateau(posX-visX*0.3,posZ-visZ*0.3)==TRUE) // Sort du plateau ?
-            {
-          	  	posX -= visX * 0.3;
-            	posZ -= visZ * 0.3;
-            }
-            break;
+    if(perdu == FALSE && finDuJeu == FALSE)
+  	{
+		int o;
+		switch(touche)
+		{
+		    case 'q' :
+		        angle -= 0.05;
+		        visX = sin(angle);
+		        visZ = -cos(angle);
+		        break;
+		    case 'd' :
+		        angle += 0.05;
+		        visX = sin(angle);
+		        visZ = -cos(angle);
+		        break;
+		    case 'z' :
+		        if(appartient(posX+visX*0.3,posZ+visZ*0.3)==TRUE) // Rentre dans un objet solide ?
+		            break;
+		        o=toucheObjectif(posX+visX*0.3,posZ+visZ*0.3); // Rentre dans un objectif ?
+		        if(o>-1)
+		        {
+		            objectif_liste[o].cache=FALSE;
+					objectifFin();
+				}
+		        if(dansPlateau(posX+visX*0.3,posZ+visZ*0.3)==TRUE) // Sort du plateau ?
+		        {
+		        	posX += visX * 0.3;
+		    	    posZ += visZ * 0.3;
+		        }
+		        break;
+		    case 's' : // Risque de poser des problemes lors du 4-arbre
+		        if(appartient(posX-visX*0.3,posZ-visZ*0.3)==TRUE) // Rentre dans un objet solide
+		            break;
+		        o=toucheObjectif(posX-visX*0.3,posZ-visZ*0.3); // Rentre dans un objectif
+		        if(o>-1)
+		        {
+		            objectif_liste[o].cache=FALSE;
+					objectifFin();
+				}
+		        if(dansPlateau(posX-visX*0.3,posZ-visZ*0.3)==TRUE) // Sort du plateau ?
+		        {
+		      	  	posX -= visX * 0.3;
+		        	posZ -= visZ * 0.3;
+		        }
+		        break;
+		}
 	}
 }
 
 void mouvement() // Idle function
 {
-    glutKeyboardFunc(clavier);
-    glutPostRedisplay();
+		glutKeyboardFunc(clavier);
+		glutPostRedisplay();
 }
 
 void parallepipede(float x1, float y1, float z1, float x2, float y2, float z2) //Coordonnées du coté bas gauche et du coté haut droit
@@ -187,7 +190,7 @@ void plateau(float x,float y,float z, float lar, float lon) //Coordonnées du co
     glVertex3f(x+lar,y,z+lon);
     glVertex3f(x,y,z+lon);
     glEnd();
-    Decor(x,y,z,lar,lon); //! A adapter au champ de vue
+    //Decor(x,y,z,lar,lon); //! A adapter au champ de vue
 }
 
 void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche du pied de la pyramide
@@ -213,7 +216,7 @@ void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche
     glVertex3f(x+1.5,y+1,z+1.5);
     glEnd();
 }
-
+/*
 void Decor(float x, float y, float z, float lar, float lon) // Cree le ciel
 {
   glBegin(GL_QUADS);
@@ -246,7 +249,7 @@ void Decor(float x, float y, float z, float lar, float lon) // Cree le ciel
   glEnd();
 
 }
-
+*/
 void Bonhomme(float x, float y, float z) //Coordonnées du coté bas gauche du pied gauche
 {
     glColor3ub(255,255,255);
@@ -305,17 +308,13 @@ void Affichage(){
 
 	  glMatrixMode(GL_PROJECTION);
 	  glLoadIdentity();
-
 	  //Mise en place de l'observateur
 	  glFrustum(-1,1, -1,1, 0.5,40);
 	  //Fin de mise en place de l'observateur
-
 	  gluLookAt(posX,1,posZ, posX+visX,1,posZ+visZ, 0,1,0);
-
+	  
 	  //Creation du plateau
 	  plateau(-52,0,-55,104,108);
-	  
-	  //Decor();
 	  
 	  //Affichage des objets générés aléatoirement
 	  int typeObjet, j;
@@ -361,10 +360,10 @@ void Affichage(){
 	//Le jeu est fini
 	}else if(perdu == TRUE){
 		glColor3d(0.5,0.5,0.5);
-		vBitmapOutput(-25,0,"Game Over",GLUT_BITMAP_TIMES_ROMAN_24);
+		vBitmapOutput(visX+posX,visZ+posZ-25,"Game Over",GLUT_BITMAP_TIMES_ROMAN_24);
 	}else if(finDuJeu == TRUE){
 		glColor3d(0.5,0.5,0.5);
-		vBitmapOutput(14,14,"VOUS AVEZ GAGNE !",GLUT_BITMAP_TIMES_ROMAN_24);
+		vBitmapOutput(visX+posX-5,visZ+posZ-25,"VOUS AVEZ GAGNE !",GLUT_BITMAP_TIMES_ROMAN_24);
 	}
 	glutSwapBuffers();
 }
@@ -389,7 +388,7 @@ int main(int argc, char * argv[], char * envp[]){
 
   glutDisplayFunc(Affichage);
   glutIdleFunc(mouvement);
-
+  glClearColor(0,0.4,0.8,0);
   //Generation des objets
   float x,y,z,r;
   int i;
