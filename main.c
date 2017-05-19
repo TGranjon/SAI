@@ -11,7 +11,7 @@ float minX=-52;
 float maxX=52;
 float minZ=-55;
 float maxZ=53;
-int finDuJeu=FALSE;
+int finDuJeu=FALSE, perdu=FALSE;
 TableTotale tableT; // Liste des carrés de collision
 TableObjetTotale tabObj;//Tableau contenant les objets
 arbre Ar;
@@ -301,7 +301,7 @@ void Objectif(float x, float y, float z, int num) //Coordonées du centre et num
 void Affichage(){
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  if(finDuJeu == FALSE){
+  if(finDuJeu == FALSE && perdu == FALSE){
 
 	  glMatrixMode(GL_PROJECTION);
 	  glLoadIdentity();
@@ -359,8 +359,11 @@ void Affichage(){
 	  }
 	  	  
 	//Le jeu est fini
-	}else{
-		glColor3d(0.5,0.5,0.5); // Texte en vert
+	}else if(perdu == TRUE){
+		glColor3d(0.5,0.5,0.5);
+		vBitmapOutput(-25,0,"Game Over",GLUT_BITMAP_TIMES_ROMAN_24);
+	}else if(finDuJeu == TRUE){
+		glColor3d(0.5,0.5,0.5);
 		vBitmapOutput(24,24,"VOUS AVEZ GAGNE !",GLUT_BITMAP_TIMES_ROMAN_24);
 	}
 	glutSwapBuffers();
@@ -368,8 +371,7 @@ void Affichage(){
 
 void gameOver()
 {
-    fprintf(stdout,"Game Over\n");
-    //exit(0); //! Trouver autre chose
+    perdu=TRUE;
 }
 
 int main(int argc, char * argv[], char * envp[]){
