@@ -398,6 +398,8 @@ int main(int argc, char * argv[], char * envp[]){
   }while((appartient(x,z)==TRUE)&&(toucheObjectif(x,z)==TRUE));
   posX=x;
   posZ=z;
+  visX=sin(angle);
+  visZ=-cos(angle);
 
   glutMainLoop();
   return 0;
