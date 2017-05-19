@@ -7,7 +7,7 @@ OPTION4 = -lglut -lGLU -lGL -lm
 all: main
 
 main.o:
-	$(CC) $(OPTION1) $(OPTION2) main.o $(OPTION3) main.c main.h
+	$(CC) $(OPTION1) $(OPTION2) main.o $(OPTION3) main.c
 main: main.o
 	$(CC) $(OPTION2) main main.o $(OPTION4)
 
