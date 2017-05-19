@@ -130,6 +130,7 @@ void plateau(float x,float y,float z, float lar, float lon) //Coordonnées du co
     glVertex3f(x+lar,y,z+lon);
     glVertex3f(x,y,z+lon);
     glEnd();
+    Decor(x,y,z,lar,lon);
 }
 
 void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche du pied de la pyramide
@@ -156,31 +157,35 @@ void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche
     glEnd();
 }
 
-void Decor() //! A adapter au plateau
+void Decor(float x, float y, float z, float lar, float lon) //! A adapter au plateau
 {
   glBegin(GL_QUADS);
   //Fond bleu
   glColor3f(0,0.4,0.8);
-  glVertex3f(-5,0,-5);
-  glVertex3f(-5,5,-5);
-  glVertex3f(-5,5,5);
-  glVertex3f(-5,0,5);
-  glVertex3f(-5,0,5);
-  glVertex3f(-5,5,5);
-  glVertex3f(5,5,5);
-  glVertex3f(5,0,5);
-  glVertex3f(5,0,5);
-  glVertex3f(5,5,5);
-  glVertex3f(5,5,-5);
-  glVertex3f(5,0,-5);
-  glVertex3f(5,0,-5);
-  glVertex3f(5,5,-5);
-  glVertex3f(-5,5,-5);
-  glVertex3f(-5,0,-5);
-  glVertex3f(-5,5,-5);
-  glVertex3f(5,5,-5);
-  glVertex3f(5,5,5);
-  glVertex3f(-5,5,5);
+  glVertex3f(x,y,z);
+  glVertex3f(x,y+10,z);
+  glVertex3f(x+lar,y+10,z);
+  glVertex3f(x+lar,y,z);
+
+  glVertex3f(x,y,z);
+  glVertex3f(x,y+10,z);
+  glVertex3f(x,y+10,z+lon);
+  glVertex3f(x,y,z+lon);
+
+  glVertex3f(x,y,z+lon);
+  glVertex3f(x,y+10,z+lon);
+  glVertex3f(x+lar,y+10,z+lon);
+  glVertex3f(x+lar,y,z+lon);
+
+  glVertex3f(x+lar,y,z);
+  glVertex3f(x+lar,y+10,z);
+  glVertex3f(x+lar,y+10,z+lon);
+  glVertex3f(x+lar,y,z+lon);
+
+  glVertex3f(x,y+10,z);
+  glVertex3f(x+lar,y+10,z);
+  glVertex3f(x+lar,y+10,z+lon);
+  glVertex3f(x,y+10,z+lon);
   glEnd();
 
 }
@@ -244,14 +249,13 @@ void Affichage(){
   glLoadIdentity();
 
   //Mise en place de l'observateur
-  glFrustum(-1,1, -1,1, 0.5,40);
+  glFrustum(-1,1, -1,1, 0.5,100);
   //Fin de mise en place de l'observateur
 
   gluLookAt(posX,1,posZ, posX+visX,1,posZ+visZ, 0,1,0);
 
   //Creation du plateau
   plateau(-52,0,-55,104,108);
-  //Decor();
 
   Immeuble(-3,0,-8);
   Arbre(5,0,0,1);

@@ -41,7 +41,7 @@ void plateau(float x,float y,float z, float lar, float lon);
 
 void pyramide(float x, float y, float z);
 
-void Decor();
+void Decor(float x,float y,float z, float lar, float lon);
 
 void Bonhomme(float x, float y, float z);
 
