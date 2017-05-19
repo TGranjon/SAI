@@ -364,7 +364,7 @@ void Affichage(){
 		vBitmapOutput(-25,0,"Game Over",GLUT_BITMAP_TIMES_ROMAN_24);
 	}else if(finDuJeu == TRUE){
 		glColor3d(0.5,0.5,0.5);
-		vBitmapOutput(24,24,"VOUS AVEZ GAGNE !",GLUT_BITMAP_TIMES_ROMAN_24);
+		vBitmapOutput(14,14,"VOUS AVEZ GAGNE !",GLUT_BITMAP_TIMES_ROMAN_24);
 	}
 	glutSwapBuffers();
 }
