@@ -361,7 +361,7 @@ void Affichage(){
 	//Le jeu est fini
 	}else{
 		glColor3d(0.5,0.5,0.5); // Texte en vert
-		vBitmapOutput(27,27,"VOUS AVEZ GAGNE !",GLUT_BITMAP_TIMES_ROMAN_24);
+		vBitmapOutput(24,24,"VOUS AVEZ GAGNE !",GLUT_BITMAP_TIMES_ROMAN_24);
 	}
 	glutSwapBuffers();
 }
