@@ -69,27 +69,27 @@ void clavier(unsigned char touche, int x, int y) // Fonction de gestion du clavi
             visZ = -cos(angle);
             break;
         case 'z' :
-            if(appartient(posX+visX*0.1,posZ+visZ*0.1)==TRUE) // Rentre dans un objet solide ?
+            if(appartient(posX+visX*0.3,posZ+visZ*0.3)==TRUE) // Rentre dans un objet solide ?
                 break;
-            o=toucheObjectif(posX+visX*0.1,posZ+visZ*0.1); // Rentre dans un objectif ?
+            o=toucheObjectif(posX+visX*0.3,posZ+visZ*0.3); // Rentre dans un objectif ?
             if(o>-1)
                 objectif_liste[o].cache=FALSE;
-            if(dansPlateau(posX+visX*0.1,posZ+visZ*0.1)==TRUE) // Sort du plateau ?
+            if(dansPlateau(posX+visX*0.3,posZ+visZ*0.3)==TRUE) // Sort du plateau ?
             {
-            	posX += visX * 0.1;
-        	    posZ += visZ * 0.1;
+            	posX += visX * 0.3;
+        	    posZ += visZ * 0.3;
             }
             break;
         case 's' : // Risque de poser des problemes lors du 4-arbre
-            if(appartient(posX-visX*0.1,posZ-visZ*0.1)==TRUE) // Rentre dans un objet solide
+            if(appartient(posX-visX*0.3,posZ-visZ*0.3)==TRUE) // Rentre dans un objet solide
                 break;
-            o=toucheObjectif(posX-visX*0.1,posZ-visZ*0.1); // Rentre dans un objectif
+            o=toucheObjectif(posX-visX*0.3,posZ-visZ*0.3); // Rentre dans un objectif
             if(o>-1)
                 objectif_liste[o].cache=FALSE;
-            if(dansPlateau(posX-visX*0.1,posZ-visZ*0.1)==TRUE) // Sort du plateau ?
+            if(dansPlateau(posX-visX*0.3,posZ-visZ*0.3)==TRUE) // Sort du plateau ?
             {
-          	  	posX -= visX * 0.1;
-            	posZ -= visZ * 0.1;
+          	  	posX -= visX * 0.3;
+            	posZ -= visZ * 0.3;
             }
             break;
 	}
@@ -442,7 +442,7 @@ int main(int argc, char * argv[], char * envp[]){
   visZ=-cos(angle);
 
   // Timer
-  glutTimerFunc(60000,gameOver,0); // 60000 ms = 1 min
+  glutTimerFunc(60000,gameOver,0); // 60000 ms = 1 min //! Determiner quel est le meilleur temps
 
   glutMainLoop();
   return 0;
