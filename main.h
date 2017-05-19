@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define NBOBJET 50 //Nombre d'objet généré aléatoirement
 #define TRUE 1
 #define FALSE 0
 
@@ -22,8 +23,23 @@ typedef struct tableforme
 typedef struct tabletotale
 {
     int taille;
-    TableForme forme[21]; // A determiner avec le 4-arbre
+    TableForme forme[NBOBJET]; // A determiner avec le 4-arbre
 } TableTotale;
+
+typedef struct detailObjet
+{
+	int typeObjet;
+	float x;
+	float y;
+	float z;
+	float r;
+} DetailObjet;
+
+typedef struct tableobjettotale
+{
+    int taille;
+    DetailObjet objet[NBOBJET]; // A determiner avec le 4-arbre
+} TableObjetTotale;
 
 int appartient(float xP, float zP);
 
