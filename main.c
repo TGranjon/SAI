@@ -334,10 +334,18 @@ void Affichage(){
 
 	  gluLookAt(posX,1,posZ, posX+visX,1,posZ+visZ, 0,1,0);
 
+	  // Calcul FOV
+      fov[0].x=posX+visX-1; // Bas gauche
+      fov[0].z=posZ+visZ+0.5;
+      fov[1].x=posX+visX+1; // Bas droit
+      fov[1].z=posZ+visZ+0.5;
+      fov[2].x=posX+visX+80; // Haut droit
+      fov[2].z=posZ+visZ+40;
+      fov[3].x=posX+visX-80; // Haut gauche
+      fov[3].z=posZ+visZ+40;
+
 	  //Creation du plateau
 	  plateau(-52,0,-55,104,108);
-
-	  //Decor();
 
 	  //Affichage des objets générés aléatoirement
 	  int typeObjet, j;
@@ -367,12 +375,6 @@ void Affichage(){
 				break;
 			}
 	  }
-	  /*
-	  Immeuble(-3,0,-8);
-	  Arbre(5,0,0,1);
-	  Bonhomme(0,0,5);
-	  Lampadaire(-5,0,0);
-	  */
 	  int i;
 	  for(i=0; i<NBOBJECTIF;i++){
 	  	if(objectif_liste[i].cache == TRUE){
@@ -514,7 +516,7 @@ int main(int argc, char * argv[], char * envp[]){
   visX=sin(angle);
   visZ=-cos(angle);
 
-  // Calcul FOV
+  // Initialisation FOV
   fov[0].x=posX+visX-1; // Bas gauche
   fov[0].z=posZ+visZ+0.5;
   fov[1].x=posX+visX+1; // Bas droit
