@@ -1,4 +1,5 @@
 #include "main.h"
+#include "string.h"
 // Pour les déplacements
 float angle=0;
 float posX=0;
@@ -10,12 +11,12 @@ float minX=-52;
 float maxX=52;
 float minZ=-55;
 float maxZ=53;
-
+int finDuJeu=FALSE;
 TableTotale tableT; // Liste des carrés de collision
 TableObjetTotale tabObj;//Tableau contenant les objets
 arbre Ar;
 TableTotale tableT; // Liste des carrés de collision
-TableObjectif objectif_liste[10]; // Liste des objectifs
+TableObjectif objectif_liste[NBOBJECTIF]; // Liste des objectifs
 
 int appartient(float xP, float zP) // Est ce que le point(xP,0,zP) appartient à un objet
 {
@@ -34,7 +35,7 @@ int appartient(float xP, float zP) // Est ce que le point(xP,0,zP) appartient à
 int toucheObjectif(float xP, float zP) // Quel objectif est touché par le joueur
 {
     int i;
-    for(i=0;i<10;i++)
+    for(i=0;i<NBOBJECTIF;i++)
     {
         if((xP>=objectif_liste[i].coordonnees.x-0.6)&&(xP<=objectif_liste[i].coordonnees.x+0.6))
         {
@@ -51,6 +52,30 @@ int dansPlateau(float xp, float zp) // Est ce que le point(xP,0,zP) est dans le 
 		return TRUE;
 	}
 	return FALSE;
+}
+
+void objectifFin() //Est ce que tous les objectifs ont ete trouves
+{
+	int i,finJeu = TRUE;
+	for(i=0; i<NBOBJECTIF; i++){
+		if(objectif_liste[i].cache == TRUE){
+			finJeu = FALSE;
+		}
+	}
+	if(finJeu == TRUE){
+		finDuJeu = TRUE;
+	}
+}
+
+//Fonction d'affichage du message de fin
+void vBitmapOutput(int x, int y, char *string, void *font)
+{
+	int len,i; // len donne la longueur de la chaîne de caractères
+	glRasterPos2f(x,y); // Positionne le premier caractère de la chaîne
+	len = (int) strlen(string); // Calcule la longueur de la chaîne
+	for (i = 0; i < len; i++){ // Affiche chaque caractère de la chaîne
+	 glutBitmapCharacter(font,string[i]); 
+	}
 }
 
 void clavier(unsigned char touche, int x, int y) // Fonction de gestion du clavier
@@ -73,7 +98,10 @@ void clavier(unsigned char touche, int x, int y) // Fonction de gestion du clavi
                 break;
             o=toucheObjectif(posX+visX*0.1,posZ+visZ*0.1); // Rentre dans un objectif ?
             if(o>-1)
+            {
                 objectif_liste[o].cache=FALSE;
+		            objectifFin();
+		        }
             if(dansPlateau(posX+visX*0.1,posZ+visZ*0.1)==TRUE) // Sort du plateau ?
             {
             	posX += visX * 0.1;
@@ -85,7 +113,10 @@ void clavier(unsigned char touche, int x, int y) // Fonction de gestion du clavi
                 break;
             o=toucheObjectif(posX-visX*0.1,posZ-visZ*0.1); // Rentre dans un objectif
             if(o>-1)
+            {
                 objectif_liste[o].cache=FALSE;
+                objectifFin();
+		        }
             if(dansPlateau(posX-visX*0.1,posZ-visZ*0.1)==TRUE) // Sort du plateau ?
             {
           	  	posX -= visX * 0.1;
@@ -271,64 +302,76 @@ void Objectif(float x, float y, float z, int num) //Coordonées du centre et num
 void Affichage(){
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
+  if(finDuJeu == FALSE){
 
-  //Mise en place de l'observateur
-  glFrustum(-1,1, -1,1, 0.5,40);
-  //Fin de mise en place de l'observateur
+	  glMatrixMode(GL_PROJECTION);
+	  glLoadIdentity();
 
-  gluLookAt(posX,1,posZ, posX+visX,1,posZ+visZ, 0,1,0);
+	  //Mise en place de l'observateur
+	  glFrustum(-1,1, -1,1, 0.5,40);
+	  //Fin de mise en place de l'observateur
 
-  //Creation du plateau
-  plateau(-52,0,-55,104,108);
+	  gluLookAt(posX,1,posZ, posX+visX,1,posZ+visZ, 0,1,0);
 
-  //Decor();
-  
-  //Affichage des objets générés aléatoirement
-  int typeObjet, j;
-  float x,y,z,r;
-  for(j=0; j<NBOBJET; j++){
-		typeObjet = tabObj.objet[j].typeObjet;
-		x = tabObj.objet[j].x;
-   		y = tabObj.objet[j].y;
-		z = tabObj.objet[j].z;
-   		switch(typeObjet){
-	   	//Immeuble
-	   	case 1:
-	   		Immeuble(x,y,z);
-	   		break;
+	  //Creation du plateau
+	  plateau(-52,0,-55,104,108);
+	  
+	  //Decor();
+	  
+	  //Affichage des objets générés aléatoirement
+	  int typeObjet, j;
+	  float x,y,z,r;
+	  for(j=0; j<NBOBJET; j++){
+			typeObjet = tabObj.objet[j].typeObjet;
+			x = tabObj.objet[j].x;
+	   		y = tabObj.objet[j].y;
+			z = tabObj.objet[j].z;
+	   		switch(typeObjet){
+		   	//Immeuble
+		   	case 1:
+		   		Immeuble(x,y,z);
+		   		break;
 
-	   	//Arbre
-	   	case 2:
-	   		r = tabObj.objet[j].r;
-			Arbre(x,y,z,r);
-			break;
+		   	//Arbre
+		   	case 2:
+		   		r = tabObj.objet[j].r;
+				Arbre(x,y,z,r);
+				break;
 
-		//Lampadaire
-		case 3:
-			Lampadaire(x,y,z);
-			break;
-		default:
-			break;
-		}
-  }
-  /*
-  Immeuble(-3,0,-8);
-  Arbre(5,0,0,1);
-  Bonhomme(0,0,5);
-  Lampadaire(-5,0,0);
-  */
-  Objectif(0,1,2,0);
-
-  glutSwapBuffers();
+			//Lampadaire
+			case 3:
+				Lampadaire(x,y,z);
+				break;
+			default:
+				break;
+			}
+	  }
+	  /*
+	  Immeuble(-3,0,-8);
+	  Arbre(5,0,0,1);
+	  Bonhomme(0,0,5);
+	  Lampadaire(-5,0,0);
+	  */
+	  int i;
+	  for(i=0; i<NBOBJECTIF;i++){
+	  	if(objectif_liste[i].cache == TRUE){
+	  		Objectif(objectif_liste[i].coordonnees.x,1,objectif_liste[i].coordonnees.z,i);
+	  	}
+	  }
+	  	  
+	//Le jeu est fini
+	}else{
+		glColor3d(0.5,0.5,0.5); // Texte en vert
+		vBitmapOutput(27,27,"VOUS AVEZ GAGNE !",GLUT_BITMAP_TIMES_ROMAN_24);
+	}
+	glutSwapBuffers();
 }
 
 int main(int argc, char * argv[], char * envp[]){
 
   tableT.taille=0;
   tabObj.taille=0;
-  Ar = ArbreVide();
+  //Ar = ArbreVide();
 
   glutInit(&argc,argv);
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
@@ -422,13 +465,13 @@ int main(int argc, char * argv[], char * envp[]){
     }
   }
 
-  for(i=0;i<10;i++) // Initialisation des objectifs
+  for(i=0;i<NBOBJECTIF;i++) // Initialisation des objectifs
   {
       do{
         x=(rand()%(104)+1)-52;
         z=(rand()%(108)+1)-55;
       }while(appartient(x,z)==TRUE);
-      objectif_liste[i].cache=FALSE;
+      objectif_liste[i].cache=TRUE;
       objectif_liste[i].coordonnees.x=x;
       objectif_liste[i].coordonnees.z=z;
   }

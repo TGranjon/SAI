@@ -5,7 +5,8 @@
 #include <stdlib.h>
 #include "arbre.h"
 
-#define NBOBJET 50 //Nombre d'objet généré aléatoirement
+#define NBOBJET 20 //Nombre d'objet généré aléatoirement
+#define NBOBJECTIF 1 //Nombre d'objet généré aléatoirement
 #define TRUE 1
 #define FALSE 0
 
@@ -55,6 +56,10 @@ int appartient(float xP, float zP);
 int toucheObjectif(float xP, float zP);
 
 int dansPlateau(float xp, float zp);
+
+void objectifFin();
+
+void vBitmapOutput(int x, int y, char *string, void *font);
 
 void clavier(unsigned char touche, int x, int y);
 
