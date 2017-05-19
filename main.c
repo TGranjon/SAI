@@ -10,6 +10,7 @@ float minX=-52;
 float maxX=52;
 float minZ=-55;
 float maxZ=53;
+arbre Ar;
 
 int nbObjets=15; //Nombre d'objet généré aléatoirement (peut etre changé)
 TableTotale tableT; // Liste des carrés de collision
@@ -154,7 +155,7 @@ void plateau(float x,float y,float z, float lar, float lon) //Coordonnées du co
     glVertex3f(x+lar,y,z+lon);
     glVertex3f(x,y,z+lon);
     glEnd();
-    Decor(x,y,z,lar,lon);
+    Decor(x,y,z,lar,lon); //! A adapter au champ de vue
 }
 
 void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche du pied de la pyramide
@@ -273,7 +274,7 @@ void Affichage(){
   glLoadIdentity();
 
   //Mise en place de l'observateur
-  glFrustum(-1,1, -1,1, 0.5,100);
+  glFrustum(-1,1, -1,1, 0.5,40);
   //Fin de mise en place de l'observateur
 
   gluLookAt(posX,1,posZ, posX+visX,1,posZ+visZ, 0,1,0);
@@ -293,6 +294,7 @@ void Affichage(){
 int main(int argc, char * argv[], char * envp[]){
 
   tableT.taille=0;
+  Ar = ArbreVide();
 
   glutInit(&argc,argv);
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
