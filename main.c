@@ -94,33 +94,33 @@ void clavier(unsigned char touche, int x, int y) // Fonction de gestion du clavi
             visZ = -cos(angle);
             break;
         case 'z' :
-            if(appartient(posX+visX*0.1,posZ+visZ*0.1)==TRUE) // Rentre dans un objet solide ?
+            if(appartient(posX+visX*0.3,posZ+visZ*0.3)==TRUE) // Rentre dans un objet solide ?
                 break;
-            o=toucheObjectif(posX+visX*0.1,posZ+visZ*0.1); // Rentre dans un objectif ?
+            o=toucheObjectif(posX+visX*0.3,posZ+visZ*0.3); // Rentre dans un objectif ?
             if(o>-1)
             {
                 objectif_liste[o].cache=FALSE;
-		            objectifFin();
-		        }
-            if(dansPlateau(posX+visX*0.1,posZ+visZ*0.1)==TRUE) // Sort du plateau ?
+				objectifFin();
+		    }
+            if(dansPlateau(posX+visX*0.3,posZ+visZ*0.3)==TRUE) // Sort du plateau ?
             {
-            	posX += visX * 0.1;
-        	    posZ += visZ * 0.1;
+            	posX += visX * 0.3;
+        	    posZ += visZ * 0.3;
             }
             break;
         case 's' : // Risque de poser des problemes lors du 4-arbre
-            if(appartient(posX-visX*0.1,posZ-visZ*0.1)==TRUE) // Rentre dans un objet solide
+            if(appartient(posX-visX*0.3,posZ-visZ*0.3)==TRUE) // Rentre dans un objet solide
                 break;
-            o=toucheObjectif(posX-visX*0.1,posZ-visZ*0.1); // Rentre dans un objectif
+            o=toucheObjectif(posX-visX*0.3,posZ-visZ*0.3); // Rentre dans un objectif
             if(o>-1)
             {
                 objectif_liste[o].cache=FALSE;
-                objectifFin();
-		        }
-            if(dansPlateau(posX-visX*0.1,posZ-visZ*0.1)==TRUE) // Sort du plateau ?
+				objectifFin();
+		    }
+            if(dansPlateau(posX-visX*0.3,posZ-visZ*0.3)==TRUE) // Sort du plateau ?
             {
-          	  	posX -= visX * 0.1;
-            	posZ -= visZ * 0.1;
+          	  	posX -= visX * 0.3;
+            	posZ -= visZ * 0.3;
             }
             break;
 	}
@@ -296,12 +296,12 @@ void Objectif(float x, float y, float z, int num) //Coordonées du centre et num
     glTranslatef(x,y,z);
     glutSolidSphere(0.6,10,10);
     glPopMatrix();
-    objectif_liste[num].cache=TRUE; //Signifie que l'objectif est encore présent (non trouvé)
 }
 
 void Affichage(){
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+<<<<<<< HEAD
   if(finDuJeu == FALSE){
 
 	  glMatrixMode(GL_PROJECTION);
@@ -367,6 +367,12 @@ void Affichage(){
 	glutSwapBuffers();
 }
 
+void gameOver()
+{
+    fprintf(stdout,"Game Over\n");
+    //exit(0); //! Trouver autre chose
+}
+
 int main(int argc, char * argv[], char * envp[]){
 
   tableT.taille=0;
@@ -405,12 +411,12 @@ int main(int argc, char * argv[], char * envp[]){
 		tabObj.objet[tabObj.taille].x=x;
 		tabObj.objet[tabObj.taille].y=y;
 		tabObj.objet[tabObj.taille].z=z;
-   		
+
    		tableT.forme[tableT.taille].minP.x=x;
         tableT.forme[tableT.taille].minP.z=z;
         tableT.forme[tableT.taille].maxP.x=x+5;
         tableT.forme[tableT.taille].maxP.z=z+5;
-        
+
         tabObj.taille++;
         tableT.taille++;
    		break;
@@ -430,7 +436,7 @@ int main(int argc, char * argv[], char * envp[]){
 		tabObj.objet[tabObj.taille].y=y;
 		tabObj.objet[tabObj.taille].z=z;
 		tabObj.objet[tabObj.taille].r=r;
-   		
+
     	tableT.forme[tableT.taille].minP.x=x;
         tableT.forme[tableT.taille].minP.z=z;
         tableT.forme[tableT.taille].maxP.x=x+r;
@@ -456,7 +462,7 @@ int main(int argc, char * argv[], char * envp[]){
         tableT.forme[tableT.taille].minP.z=z;
         tableT.forme[tableT.taille].maxP.x=x+0.5;
         tableT.forme[tableT.taille].maxP.z=z+0.5;
-        
+
         tabObj.taille++;
         tableT.taille++;
     	break;
@@ -484,6 +490,9 @@ int main(int argc, char * argv[], char * envp[]){
   posZ=z;
   visX=sin(angle);
   visZ=-cos(angle);
+
+  // Timer
+  glutTimerFunc(60000,gameOver,0); // 60000 ms = 1 min //! Determiner quel est le meilleur temps
 
   glutMainLoop();
   return 0;
