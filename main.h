@@ -27,11 +27,13 @@ typedef struct tabletotale
 
 typedef struct tableobjectif
 {
-    int trouve;
+    int cache;
     Point coordonnees;
 } TableObjectif;
 
 int appartient(float xP, float zP);
+
+int toucheObjectif(float xP, float zP);
 
 int dansPlateau(float xp, float zp);
 

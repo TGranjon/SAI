@@ -29,6 +29,20 @@ int appartient(float xP, float zP) // Est ce que le point(xP,0,zP) appartient à
     return FALSE;
 }
 
+int toucheObjectif(float xP, float zP) // Quel objectif est touché par le joueur
+{
+    int i;
+    for(i=0;i<10;i++)
+    {
+        if((xP>=objectif_liste[i].coordonnees.x-0.6)&&(xP<=objectif_liste[i].coordonnees.x+0.6))
+        {
+            if((zP>=objectif_liste[i].coordonnees.z-0.6)&&(zP<=objectif_liste[i].coordonnees.z+0.6))
+                return i;
+        }
+    }
+    return -1;
+}
+
 int dansPlateau(float xp, float zp){ // Est ce que le point(xP,0,zP) est dans le plateau
 	if(xp>=minX && xp<=maxX && zp>=minZ && zp<=maxZ){
 		return TRUE;
@@ -38,6 +52,7 @@ int dansPlateau(float xp, float zp){ // Est ce que le point(xP,0,zP) est dans le
 
 void clavier(unsigned char touche, int x, int y) // Fonction de gestion du clavier
 {
+    int o;
     switch(touche)
     {
         case 'q' :
@@ -53,6 +68,9 @@ void clavier(unsigned char touche, int x, int y) // Fonction de gestion du clavi
         case 'z' :
             if(appartient(posX+visX*0.1,posZ+visZ*0.1)==TRUE)
                 break;
+            o=toucheObjectif(posX+visX*0.1,posZ+visZ*0.1);
+            if(o>-1)
+                objectif_liste[o].cache=FALSE;
             if(dansPlateau(posX+visX*0.1,posZ+visZ*0.1)==TRUE){
             	posX += visX * 0.1;
         	    posZ += visZ * 0.1;
@@ -61,6 +79,9 @@ void clavier(unsigned char touche, int x, int y) // Fonction de gestion du clavi
         case 's' : // Risque de poser des problemes lors du 4-arbre
             if(appartient(posX-visX*0.1,posZ-visZ*0.1)==TRUE)
                 break;
+            o=toucheObjectif(posX-visX*0.1,posZ-visZ*0.1);
+            if(o>-1)
+                objectif_liste[o].cache=FALSE;
             if(dansPlateau(posX-visX*0.1,posZ-visZ*0.1)==TRUE){
           	  	posX -= visX * 0.1;
             	posZ -= visZ * 0.1;
@@ -239,7 +260,7 @@ void Objectif(float x, float y, float z, int num) //Coordonées du centre et num
     glTranslatef(x,y,z);
     glutSolidSphere(0.6,10,10);
     glPopMatrix();
-    objectif_liste[num].trouve=TRUE; //Signifie que l'objectif est encore présent (non trouvé)
+    objectif_liste[num].cache=TRUE; //Signifie que l'objectif est encore présent (non trouvé)
 }
 
 void Affichage(){
@@ -361,7 +382,7 @@ int main(int argc, char * argv[], char * envp[]){
         x=(rand()%(104)+1)-52;
         z=(rand()%(108)+1)-55;
       }while(appartient(x,z)==TRUE);
-      objectif_liste[i].trouve=FALSE;
+      objectif_liste[i].cache=FALSE;
       objectif_liste[i].coordonnees.x=x;
       objectif_liste[i].coordonnees.z=z;
   }
