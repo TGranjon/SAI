@@ -22,10 +22,17 @@ typedef struct s_arbre
 typedef s_arbre* arbre;
 
 arbre ArbreVide();
+
 arbre ConsArbre(element e, ...);
+
+void vider(arbre A);
+
 arbre Fils(int ieme, arbre A);
+
 element kacine(arbre A);
+
 int EstVide(arbre A);
+
 void Afficher(arbre A);
 
 #endif

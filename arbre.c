@@ -21,6 +21,17 @@ arbre ConsArbre(element e, ...)
   return k;
 }
 
+void vider(arbre A)
+{
+    int i;
+    for(i=0;i<4;i++)
+    {
+        if(!ArbreVide(A->fils[i]))
+            vider(A->fils[i]);
+    }
+    free(A);
+}
+
 arbre Fils(int ieme, arbre A)
 {
   return A->fils[ieme];
