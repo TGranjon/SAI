@@ -326,6 +326,7 @@ int main(int argc, char * argv[], char * envp[]){
 
   tableT.taille=0;
   tabObj.taille=0;
+  srand(time(NULL));
   //Ar = ArbreVide();
 
   glutInit(&argc,argv);
