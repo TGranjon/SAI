@@ -326,7 +326,7 @@ int main(int argc, char * argv[], char * envp[]){
 
   tableT.taille=0;
   tabObj.taille=0;
-  Ar = ArbreVide();
+  //Ar = ArbreVide();
 
   glutInit(&argc,argv);
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
@@ -361,10 +361,10 @@ int main(int argc, char * argv[], char * envp[]){
 		tabObj.objet[tabObj.taille].y=y;
 		tabObj.objet[tabObj.taille].z=z;
 
-   		tableT.forme[tableT.taille].minP.x=x;
-        tableT.forme[tableT.taille].minP.z=z;
-        tableT.forme[tableT.taille].maxP.x=x+5;
-        tableT.forme[tableT.taille].maxP.z=z+5;
+   		tableT.forme[tableT.taille].minP.x=x-0.2;
+        tableT.forme[tableT.taille].minP.z=z-0.2;
+        tableT.forme[tableT.taille].maxP.x=x+5.2;
+        tableT.forme[tableT.taille].maxP.z=z+5.2;
 
         tabObj.taille++;
         tableT.taille++;
@@ -386,10 +386,10 @@ int main(int argc, char * argv[], char * envp[]){
 		tabObj.objet[tabObj.taille].z=z;
 		tabObj.objet[tabObj.taille].r=r;
 
-    	tableT.forme[tableT.taille].minP.x=x;
-        tableT.forme[tableT.taille].minP.z=z;
-        tableT.forme[tableT.taille].maxP.x=x+r;
-        tableT.forme[tableT.taille].maxP.z=z+r;
+    	tableT.forme[tableT.taille].minP.x=x-0.2;
+        tableT.forme[tableT.taille].minP.z=z-0.2;
+        tableT.forme[tableT.taille].maxP.x=x+r+0.2;
+        tableT.forme[tableT.taille].maxP.z=z+r+0.2;
 
         tabObj.taille++;
         tableT.taille++;
@@ -407,10 +407,10 @@ int main(int argc, char * argv[], char * envp[]){
 		tabObj.objet[tabObj.taille].x=x;
 		tabObj.objet[tabObj.taille].y=y;
 		tabObj.objet[tabObj.taille].z=z;
-    	tableT.forme[tableT.taille].minP.x=x;
-        tableT.forme[tableT.taille].minP.z=z;
-        tableT.forme[tableT.taille].maxP.x=x+0.5;
-        tableT.forme[tableT.taille].maxP.z=z+0.5;
+    	tableT.forme[tableT.taille].minP.x=x-0.3;
+        tableT.forme[tableT.taille].minP.z=z-0.3;
+        tableT.forme[tableT.taille].maxP.x=x+0.7;
+        tableT.forme[tableT.taille].maxP.z=z+0.7;
 
         tabObj.taille++;
         tableT.taille++;
