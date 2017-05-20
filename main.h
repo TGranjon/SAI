@@ -74,7 +74,6 @@ void clavier(unsigned char touche, int x, int y);
 
 void mouvement();
 
-
 void Affichage();
 
 void gameOver();
