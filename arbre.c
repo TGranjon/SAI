@@ -26,7 +26,7 @@ void vider(arbre A)
     int i;
     for(i=0;i<4;i++)
     {
-        if(!ArbreVide(A->fils[i]))
+        if(EstVide(A->fils[i]) == FALSE)
             vider(A->fils[i]);
     }
     free(A);
@@ -53,16 +53,18 @@ void Afficher(arbre A)
 {
   if(EstVide(A) == TRUE)
     {
+        fprintf(stdout,"Arbre vide\n");
     }
-  fprintf(stdout,"%d",A->racine);
+  fprintf(stdout,"%d\n",A->racine);
   int i;
-  fprintf(stdout,"\nSes fils :\n");
   for(i=0;i<4;i++)
     {
-      if(EstVide(Fils(i,A)) == 1)
-	{
-	  Afficher(Fils(i,A));
-	}
+      if(EstVide(Fils(i,A)) == FALSE)
+        {
+          fprintf(stdout,"\tFils %d :\n",i);
+          Afficher(Fils(i,A));
+          fprintf(stdout,"\tFin du fils %d\n",i);
+        }
     }
   fprintf(stdout,"Fin des fils\n");
 }

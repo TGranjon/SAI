@@ -259,6 +259,17 @@ void Affichage(){
 
 	  //Creation du plateau
 	  plateau(-52,0,-55,104,108);
+	  Point P[4];
+      P[0].x=-52;
+      P[0].z=-55;
+      P[1].x=-52;
+      P[1].z=53;
+      P[2].x=52;
+      P[2].z=53;
+      P[3].z=52;
+      P[3].z=-55;
+      //Ar = Arbre4(P);
+      //vider(Ar);
 
 	  //Affichage des objets générés aléatoirement
 	  int typeObjet, j;
@@ -315,7 +326,7 @@ int main(int argc, char * argv[], char * envp[]){
 
   tableT.taille=0;
   tabObj.taille=0;
-  //Ar = ArbreVide();
+  Ar = ArbreVide();
 
   glutInit(&argc,argv);
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
