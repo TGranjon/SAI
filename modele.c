@@ -82,39 +82,6 @@ void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche d
     glEnd();
 }
 
-void Decor(float x, float y, float z, float lar, float lon) // Cree le ciel
-{
-  glBegin(GL_QUADS);
-  //Fond bleu
-  glColor3f(0,0.4,0.8);
-  glVertex3f(x,y,z);
-  glVertex3f(x,y+10,z);
-  glVertex3f(x+lar,y+10,z);
-  glVertex3f(x+lar,y,z);
-
-  glVertex3f(x,y,z);
-  glVertex3f(x,y+10,z);
-  glVertex3f(x,y+10,z+lon);
-  glVertex3f(x,y,z+lon);
-
-  glVertex3f(x,y,z+lon);
-  glVertex3f(x,y+10,z+lon);
-  glVertex3f(x+lar,y+10,z+lon);
-  glVertex3f(x+lar,y,z+lon);
-
-  glVertex3f(x+lar,y,z);
-  glVertex3f(x+lar,y+10,z);
-  glVertex3f(x+lar,y+10,z+lon);
-  glVertex3f(x+lar,y,z+lon);
-
-  glVertex3f(x,y+10,z);
-  glVertex3f(x+lar,y+10,z);
-  glVertex3f(x+lar,y+10,z+lon);
-  glVertex3f(x,y+10,z+lon);
-  glEnd();
-
-}
-
 void Bonhomme(float x, float y, float z) //Coordonnées du coté bas gauche du pied gauche
 {
     glColor3ub(255,255,255);
