@@ -49,10 +49,10 @@ void Afficher(arbre A)
   int i;
   for(i=0;i<4;i++)
     {
-      if(EstVide(Fils(i,A)) == FALSE)
+      if(EstVide(A->fils[i]) == FALSE)
         {
           fprintf(stdout,"\tFils %d :\n",i);
-          Afficher(Fils(i,A));
+          Afficher(A->fils[i]);
           fprintf(stdout,"\tFin du fils %d\n",i);
         }
     }

@@ -55,7 +55,6 @@ void plateau(float x,float y,float z, float lar, float lon) //Coordonnées du cot
     glVertex3f(x+lar,y,z+lon);
     glVertex3f(x,y,z+lon);
     glEnd();
-    Decor(x,y,z,lar,lon); //! A adapter au champ de vue
 }
 
 void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche du pied de la pyramide
