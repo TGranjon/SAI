@@ -1,5 +1,4 @@
 #include "main.h"
-#include "string.h"
 // Pour les déplacements
 float angle=0;
 float posX=0;
@@ -29,7 +28,7 @@ int appartient(float xP, float zP) // Est ce que le point(xP,0,zP) appartient à
     return FALSE;
 }
 
-int toucheObjectif(float xP, float zP) // Quel objectif est touché par le joueur
+int toucheObjectif(float xP, float zP) // Un objectif est-il touché par le joueur
 {
     int i;
     for(i=0;i<NBOBJECTIF;i++)
