@@ -32,16 +32,6 @@ void vider(arbre A)
     free(A);
 }
 
-arbre Fils(int ieme, arbre A)
-{
-  return A->fils[ieme];
-}
-
-element Racine(arbre A)
-{
-  return A->racine;
-}
-
 int EstVide(arbre A)
 {
     if(A==NULL)

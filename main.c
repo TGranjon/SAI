@@ -265,8 +265,8 @@ void Affichage(){
       P[3].z=52;
       P[3].z=-55;
       // Fonctions arbre
-      /*Ar = Arbre4(P);
-      vider(Ar);*/
+      Ar = Arbre4(P);
+      vider(Ar);
 
 	  //Affichage des objets générés aléatoirement
 	  int typeObjet, j;

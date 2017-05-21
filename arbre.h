@@ -27,10 +27,6 @@ arbre ConsArbre(element e, ...);
 
 void vider(arbre A);
 
-arbre Fils(int ieme, arbre A);
-
-element kacine(arbre A);
-
 int EstVide(arbre A);
 
 void Afficher(arbre A);
