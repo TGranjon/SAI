@@ -6,11 +6,6 @@ float posX=0;
 float posZ=-1;
 float visX=0;
 float visZ=5;
-//Limite de déplacement
-float minX=-52;
-float maxX=52;
-float minZ=-55;
-float maxZ=53;
 int finDuJeu=FALSE, perdu=FALSE;
 TableTotale tableT; // Liste des carrés de collision
 TableObjetTotale tabObj;//Tableau contenant les objets
@@ -47,9 +42,9 @@ int toucheObjectif(float xP, float zP) // Quel objectif est touché par le joueu
     return -1;
 }
 
-int dansPlateau(float xp, float zp) // Est ce que le point(xP,0,zP) est dans le plateau
+int dansPlateau(float xP, float zP) // Est ce que le point(xP,0,zP) est dans le plateau
 {
-	if(xp>=minX && xp<=maxX && zp>=minZ && zp<=maxZ){
+	if(xP>=-52 && xP<=52 && zP>=-55 && zP<=53){
 		return TRUE;
 	}
 	return FALSE;
