@@ -6,13 +6,14 @@ float posX=0;
 float posZ=-1;
 float visX=0;
 float visZ=5;
-int finDuJeu=FALSE, perdu=FALSE;
+// Fin des déplacements
+int finDuJeu=FALSE, perdu=FALSE; // booleens de fin de partie
 TableTotale tableT; // Liste des carrés de collision
 TableObjetTotale tabObj;//Tableau contenant les objets
-arbre Ar;
+arbre Ar; // 4-arbre
 TableTotale tableT; // Liste des carrés de collision
 TableObjectif objectif_liste[NBOBJECTIF]; // Liste des objectifs
-Point fov[4];
+Point fov[4]; // FOV de l'utilisateur
 
 int appartient(float xP, float zP) // Est ce que le point(xP,0,zP) appartient à un objet
 {
@@ -263,8 +264,9 @@ void Affichage(){
       P[2].z=53;
       P[3].z=52;
       P[3].z=-55;
-      //Ar = Arbre4(P);
-      //vider(Ar);
+      // Fonctions arbre
+      Ar = Arbre4(P);
+      vider(Ar);
 
 	  //Affichage des objets générés aléatoirement
 	  int typeObjet, j;
