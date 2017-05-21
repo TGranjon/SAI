@@ -282,10 +282,10 @@ void Affichage(){
 		   		Immeuble(x,y,z);
 		   		break;
 
-		   	//Arbre
+		   	//Sapin
 		   	case 2:
 		   		r = tabObj.objet[j].r;
-				Arbre(x,y,z,r);
+				Sapin(x,y,z,r);
 				break;
 
 			//Lampadaire
@@ -368,7 +368,7 @@ int main(int argc, char * argv[], char * envp[]){
         tableT.taille++;
    		break;
 
-   	//Arbre
+   	//Sapin
    	case 2:
    	   	//Vérification que le point choisi n'est pas en collision avec un autre objet
    		do{
@@ -376,7 +376,6 @@ int main(int argc, char * argv[], char * envp[]){
 			z=(rand()%(108)+1)-55;
 		}while(appartient(x,z)==TRUE);
    		y=0;
-   		//r=rand()%(6-1)+1;
    		r=1;
 	 	tabObj.objet[tabObj.taille].typeObjet=objet;
 		tabObj.objet[tabObj.taille].x=x;

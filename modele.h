@@ -13,7 +13,7 @@ void Bonhomme(float x, float y, float z);
 
 void Immeuble(float x, float y, float z);
 
-void Arbre(float x, float y, float z, float r);
+void Sapin(float x, float y, float z, float r);
 
 void Lampadaire(float x, float y, float z);
 

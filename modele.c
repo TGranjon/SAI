@@ -103,7 +103,7 @@ void Immeuble(float x, float y, float z) //Coordonnées du coté bas gauche
     parallepipede(x,y,z,x+5,y+8,z+5);
 }
 
-void Arbre(float x, float y, float z, float r) //Coordonées du bas gauche du tronc et longueur d'un coté
+void Sapin(float x, float y, float z, float r) //Coordonées du bas gauche du tronc et longueur d'un coté
 {
     glColor3ub(139,69,19);
     parallepipede(x,y,z,x+r,y+2,z+r);
