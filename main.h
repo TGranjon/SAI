@@ -8,8 +8,8 @@
 #include "arbre.h"
 #include "modele.h"
 
-#define NBOBJET 20 //Nombre d'objet généré aléatoirement
-#define NBOBJECTIF 1 //Nombre d'objet généré aléatoirement
+#define NBOBJET 20 // Nombre d'objet généré aléatoirement
+#define NBOBJECTIF 1 // Nombre d'objet généré aléatoirement
 #define TRUE 1
 #define FALSE 0
 
@@ -28,7 +28,7 @@ typedef struct tableforme // Structure TableForme(minP,maxP)
 typedef struct tabletotale // Structure TableTotale(taille, forme[])
 {
     int taille;
-    TableForme forme[NBOBJET]; // A determiner avec le 4-arbre
+    TableForme forme[NBOBJET];
 } TableTotale;
 
 
@@ -44,7 +44,7 @@ typedef struct detailObjet
 typedef struct tableobjettotale
 {
     int taille;
-    DetailObjet objet[NBOBJET]; // A determiner avec le 4-arbre
+    DetailObjet objet[NBOBJET];
 } TableObjetTotale;
 
 typedef struct tableobjectif // Structure TableObjectif(cache,coordonnees)

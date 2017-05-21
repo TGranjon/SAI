@@ -9,12 +9,13 @@
 #define PLEIN 1
 #define VIDE 0
 #define INTER -1
+
 #define TRUE 1
 #define FALSE 0
 
 typedef int element;
 
-typedef struct s_arbre
+typedef struct s_arbre // Structure arbre(racine,fils[])
 {
   element racine;
   struct s_arbre** fils;

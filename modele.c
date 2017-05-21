@@ -1,6 +1,6 @@
 #include "modele.h"
 
-void parallepipede(float x1, float y1, float z1, float x2, float y2, float z2) //Coordonnées du coté bas gauche et du coté haut droit
+void parallepipede(float x1, float y1, float z1, float x2, float y2, float z2) // Coordonnées du coté bas gauche et du coté haut droit
 {
     glBegin(GL_QUADS);
     //Bas
@@ -36,7 +36,7 @@ void parallepipede(float x1, float y1, float z1, float x2, float y2, float z2) /
     glEnd();
 }
 
-void carre(float x,float y,float z, float l) //Coordonnées du coté bas gauche et longueur d'un coté
+void carre(float x,float y,float z, float l) // Coordonnées du coté bas gauche et longueur d'un coté
 {
     glBegin(GL_QUADS);
     glVertex3f(x,y,z);
@@ -46,7 +46,7 @@ void carre(float x,float y,float z, float l) //Coordonnées du coté bas gauche et
     glEnd();
 }
 
-void plateau(float x,float y,float z, float lar, float lon) //Coordonnées du coté bas gauche, largeur et longueur
+void plateau(float x,float y,float z, float lar, float lon) // Coordonnées du coté bas gauche, largeur et longueur
 {
     glColor3f(0.7,0.7,0.7);
     glBegin(GL_QUADS);
@@ -57,7 +57,7 @@ void plateau(float x,float y,float z, float lar, float lon) //Coordonnées du cot
     glEnd();
 }
 
-void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche du pied de la pyramide
+void pyramide(float x, float y, float z) // Coordonées du coin inférieur gauche du pied de la pyramide
 {
     glBegin(GL_QUADS);
     glVertex3f(x,y,z);
@@ -81,7 +81,7 @@ void pyramide(float x, float y, float z) //Coordonées du coin inférieur gauche d
     glEnd();
 }
 
-void Bonhomme(float x, float y, float z) //Coordonnées du coté bas gauche du pied gauche
+void Bonhomme(float x, float y, float z) // Coordonnées du coté bas gauche du pied gauche
 {
     glColor3ub(255,255,255);
     parallepipede(x,y,z,x+1,y+2,z+1); //Pied gauche
@@ -96,13 +96,13 @@ void Bonhomme(float x, float y, float z) //Coordonnées du coté bas gauche du pie
 
 }
 
-void Immeuble(float x, float y, float z) //Coordonnées du coté bas gauche
+void Immeuble(float x, float y, float z) // Coordonnées du coté bas gauche
 {
     glColor3f(0.6,0.6,0.6);
     parallepipede(x,y,z,x+5,y+8,z+5);
 }
 
-void Sapin(float x, float y, float z, float r) //Coordonées du bas gauche du tronc et longueur d'un coté
+void Sapin(float x, float y, float z, float r) // Coordonées du bas gauche du tronc et longueur d'un coté
 {
     glColor3ub(139,69,19);
     parallepipede(x,y,z,x+r,y+2,z+r);
@@ -112,7 +112,7 @@ void Sapin(float x, float y, float z, float r) //Coordonées du bas gauche du tro
     pyramide(x-r,y+3,z-r);
 }
 
-void Lampadaire(float x, float y, float z) //Coordonnées du pied
+void Lampadaire(float x, float y, float z) // Coordonnées du pied
 {
     glColor3ub(166,166,166);
     parallepipede(x,y,z,x+0.5,y+3,z+0.5);
@@ -123,7 +123,7 @@ void Lampadaire(float x, float y, float z) //Coordonnées du pied
     glPopMatrix();
 }
 
-void Objectif(float x, float y, float z, int num) //Coordonées du centre et numero de l'objectif
+void Objectif(float x, float y, float z, int num) // Coordonées du centre et numero de l'objectif
 {
     glColor3ub(0,0,200);
     glPushMatrix();

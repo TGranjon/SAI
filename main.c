@@ -14,7 +14,7 @@ TableTotale tableT; // Liste des carrés de collision
 TableObjectif objectif_liste[NBOBJECTIF]; // Liste des objectifs
 Point fov[4]; // FOV de l'utilisateur
 
-int appartient(float xP, float zP) // Est ce que le point(xP,0,zP) appartient à un objet
+int appartient(float xP, float zP) // Est ce que le point(xP,0,zP) appartient à un objet ?
 {
     int a;
     for(a=0;a<tableT.taille;a++)
@@ -28,7 +28,7 @@ int appartient(float xP, float zP) // Est ce que le point(xP,0,zP) appartient à
     return FALSE;
 }
 
-int toucheObjectif(float xP, float zP) // Un objectif est-il touché par le joueur
+int toucheObjectif(float xP, float zP) // Un objectif est-il touché par le joueur ?
 {
     int i;
     for(i=0;i<NBOBJECTIF;i++)
@@ -42,7 +42,7 @@ int toucheObjectif(float xP, float zP) // Un objectif est-il touché par le joue
     return -1;
 }
 
-int dansPlateau(float xP, float zP) // Est ce que le point(xP,0,zP) est dans le plateau
+int dansPlateau(float xP, float zP) // Est ce que le point(xP,0,zP) est dans le plateau ?
 {
 	if(xP>=-52 && xP<=52 && zP>=-55 && zP<=53){
 		return TRUE;
@@ -50,10 +50,10 @@ int dansPlateau(float xP, float zP) // Est ce que le point(xP,0,zP) est dans le 
 	return FALSE;
 }
 
-int pnpoly(int nvert, Point vert[], float testx, float testz) // Est ce que le point(x,y) est dans un polygone (0 = non, 1 = oui)
-// nvert est le nombre de cotés
-// vert est le polygone
-// testx et testz sont les coordonnees du point a tester
+int pnpoly(int nvert, Point vert[], float testx, float testz) // Est ce que le point(x,y) est dans un polygone ? (0 = non, 1 = oui)
+//nvert est le nombre de cotés
+//vert est le polygone
+//testx et testz sont les coordonnees du point a tester
 {
   int i, j, c = 0;
   float vertx[nvert];
@@ -71,18 +71,18 @@ int pnpoly(int nvert, Point vert[], float testx, float testz) // Est ce que le p
   return c;
 }
 
-int inclus(Point A[]) //Est ce que le FOV est inclus dans A
+int inclus(Point A[]) // Est ce que le FOV est inclus dans A ?
 {
     int i;
     for(i=0;i<4;i++)
     {
         if(pnpoly(4,A,fov[i].x,fov[i].z)==1)
-            return TRUE; // Le FOV est dans A -> contenu()
+            return TRUE; //Le FOV est dans A -> contenu()
     }
-    return FALSE; // Le FOV n'est pas dans A -> Arbre VIDE
+    return FALSE; //Le FOV n'est pas dans A -> Arbre VIDE
 }
 
-int contenu(Point A[]) // Est ce que A est contenu dans le FOV
+int contenu(Point A[]) // Est ce que A est contenu dans le FOV ?
 {
     int i;
     int c=0;
@@ -92,10 +92,10 @@ int contenu(Point A[]) // Est ce que A est contenu dans le FOV
             c++;
     }
     if(c==4)
-        return 3; // A est intégralement dans le FOV -> Arbre PLEIN
+        return 3; //A est intégralement dans le FOV -> Arbre PLEIN
     if(c>0)
-        return 2; // A est partiellement dans le FOV -> Arbre INTER
-    return 1; // A n'est pas dans le FOV -> Arbre VIDE
+        return 2; //A est partiellement dans le FOV -> Arbre INTER
+    return 1; //A n'est pas dans le FOV -> Arbre VIDE
 }
 
 arbre Arbre4(Point A[]) // Cree le 4-arbre qui represente ce qui est vu par le joueur
@@ -149,7 +149,7 @@ arbre Arbre4(Point A[]) // Cree le 4-arbre qui represente ce qui est vu par le j
     return ArbreVide(); // Cas d'erreur
 }
 
-void objectifFin() //Est ce que tous les objectifs ont ete trouves
+void objectifFin() // Est ce que tous les objectifs ont ete trouves ?
 {
 	int i,finJeu = TRUE;
 	for(i=0; i<NBOBJECTIF; i++){
@@ -162,13 +162,12 @@ void objectifFin() //Est ce que tous les objectifs ont ete trouves
 	}
 }
 
-//Fonction d'affichage du message de fin
-void vBitmapOutput(int x, int z, char *string, void *font)
+void vBitmapOutput(int x, int z, char *string, void *font) // Fonction d'affichage du message de fin
 {
-	int len,i; // len donne la longueur de la chaîne de caractères
-	glRasterPos3f(x,0,z); // Positionne le premier caractère de la chaîne
-	len = (int) strlen(string); // Calcule la longueur de la chaîne
-	for (i = 0; i < len; i++){ // Affiche chaque caractère de la chaîne
+	int len,i; //len donne la longueur de la chaîne de caractères
+	glRasterPos3f(x,0,z); //Positionne le premier caractère de la chaîne
+	len = (int) strlen(string); //Calcule la longueur de la chaîne
+	for (i = 0; i < len; i++){ //Affiche chaque caractère de la chaîne
 	 glutBitmapCharacter(font,string[i]);
 	}
 }
@@ -191,30 +190,30 @@ void clavier(unsigned char touche, int x, int y) // Fonction de gestion du clavi
 		        visZ = -cos(angle);
 		        break;
 		    case 'z' :
-		        if(appartient(posX+visX*0.3,posZ+visZ*0.3)==TRUE) // Rentre dans un objet solide ?
+		        if(appartient(posX+visX*0.3,posZ+visZ*0.3)==TRUE) //Rentre dans un objet solide ?
 		            break;
-		        o=toucheObjectif(posX+visX*0.3,posZ+visZ*0.3); // Rentre dans un objectif ?
+		        o=toucheObjectif(posX+visX*0.3,posZ+visZ*0.3); //Rentre dans un objectif ?
 		        if(o>-1)
 		        {
 		            objectif_liste[o].cache=FALSE;
 					objectifFin();
 				}
-		        if(dansPlateau(posX+visX*0.3,posZ+visZ*0.3)==TRUE) // Sort du plateau ?
+		        if(dansPlateau(posX+visX*0.3,posZ+visZ*0.3)==TRUE) //Sort du plateau ?
 		        {
 		        	posX += visX * 0.3;
 		    	    posZ += visZ * 0.3;
 		        }
 		        break;
-		    case 's' : // Risque de poser des problemes lors du 4-arbre
-		        if(appartient(posX-visX*0.3,posZ-visZ*0.3)==TRUE) // Rentre dans un objet solide
+		    case 's' :
+		        if(appartient(posX-visX*0.3,posZ-visZ*0.3)==TRUE) //Rentre dans un objet solide
 		            break;
-		        o=toucheObjectif(posX-visX*0.3,posZ-visZ*0.3); // Rentre dans un objectif
+		        o=toucheObjectif(posX-visX*0.3,posZ-visZ*0.3); //Rentre dans un objectif
 		        if(o>-1)
 		        {
 		            objectif_liste[o].cache=FALSE;
 					objectifFin();
 				}
-		        if(dansPlateau(posX-visX*0.3,posZ-visZ*0.3)==TRUE) // Sort du plateau ?
+		        if(dansPlateau(posX-visX*0.3,posZ-visZ*0.3)==TRUE) //Sort du plateau ?
 		        {
 		      	  	posX -= visX * 0.3;
 		        	posZ -= visZ * 0.3;
@@ -242,7 +241,7 @@ void Affichage(){
 	  //Fin de mise en place de l'observateur
 	  gluLookAt(posX,1,posZ, posX+visX,1,posZ+visZ, 0,1,0);
 
-	  // Calcul FOV
+	  //Calcul FOV
       fov[0].x=posX+visX-1; // Bas gauche
       fov[0].z=posZ+visZ+0.5;
       fov[1].x=posX+visX+1; // Bas droit
@@ -263,7 +262,7 @@ void Affichage(){
       P[2].z=53;
       P[3].z=52;
       P[3].z=-55;
-      // Fonctions arbre
+      //Fonctions arbre
       /*Ar = Arbre4(P);
       vider(Ar);*/
 
@@ -426,7 +425,7 @@ int main(int argc, char * argv[], char * envp[]){
       objectif_liste[i].coordonnees.x=x;
       objectif_liste[i].coordonnees.z=z;
   }
-  // Initialisation position joueur
+  //Initialisation position joueur
   do{
       x=(rand()%(104)+1)-52;
       z=(rand()%(108)+1)-55;
@@ -436,7 +435,7 @@ int main(int argc, char * argv[], char * envp[]){
   visX=sin(angle);
   visZ=-cos(angle);
 
-  // Initialisation FOV
+  //Initialisation FOV
   fov[0].x=posX+visX-1; // Bas gauche
   fov[0].z=posZ+visZ+0.5;
   fov[1].x=posX+visX+1; // Bas droit
@@ -446,8 +445,8 @@ int main(int argc, char * argv[], char * envp[]){
   fov[3].x=posX+visX-80; // Haut gauche
   fov[3].z=posZ+visZ+40;
 
-  // Timer
-  glutTimerFunc(60000,gameOver,0); // 60000 ms = 1 min //! Determiner quel est le meilleur temps
+  //Timer
+  glutTimerFunc(60000,gameOver,0); // 60000 ms = 1 min
 
   glutMainLoop();
   return 0;
