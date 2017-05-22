@@ -6,21 +6,23 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
+//Racine des arbres
 #define PLEIN 1
 #define VIDE 0
 #define INTER -1
 
+//Booléens
 #define TRUE 1
 #define FALSE 0
 
-typedef int Element;
+typedef int Element; // Type racine
 
-typedef struct s_arbre // Structure arbre(racine,fils[])
+typedef struct s_arbre // Structure s_arbre(Element,s_arbre**)
 {
   Element racine;
   struct s_arbre** fils;
 }s_arbre;
-typedef s_arbre* Arbre;
+typedef s_arbre* Arbre; // Structure Arbre
 
 Arbre ArbreVide();
 

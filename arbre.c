@@ -21,7 +21,7 @@ Arbre ConsArbre(Element e, ...) // Construit un arbre avec les paramètres propos
   return k;
 }
 
-void vider(Arbre A) // Libère la mémoire prise par un arbre
+void vider(Arbre A) // Libère la mémoire prise par un arbre et ses fils
 {
     int i;
     for(i=0;i<4;i++)

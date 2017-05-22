@@ -84,14 +84,14 @@ void pyramide(float x, float y, float z) // Coordonées du coin inférieur gauche 
 void Bonhomme(float x, float y, float z) // Coordonnées du coté bas gauche du pied gauche
 {
     glColor3ub(255,255,255);
-    parallepipede(x,y,z,x+1,y+2,z+1); //Pied gauche
-    parallepipede(x+2,y,z,x+3,y+2,z+1); //Pied droit
-    parallepipede(x,y+2,z,x+3,y+4,z+1); //Torse
-    parallepipede(x-1,y+3,z,x,y+4,z+1); //Bras gauche
-    parallepipede(x+3,y+3,z,x+4,y+4,z+1); //Bras droit
+    parallepipede(x,y,z,x+1,y+2,z+1); // Pied gauche
+    parallepipede(x+2,y,z,x+3,y+2,z+1); // Pied droit
+    parallepipede(x,y+2,z,x+3,y+4,z+1); // Torse
+    parallepipede(x-1,y+3,z,x,y+4,z+1); // Bras gauche
+    parallepipede(x+3,y+3,z,x+4,y+4,z+1); // Bras droit
     glPushMatrix();
     glTranslatef(x+1.5,y+4.5,z+0.5);
-    glutSolidSphere(1,20,20); //Tête
+    glutSolidSphere(1,20,20); // Tête
     glPopMatrix();
 
 }
