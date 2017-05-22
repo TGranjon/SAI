@@ -107,7 +107,7 @@ int contenu(Point A[]) // Est ce que A est contenu dans le FOV ?
     return 1; // A n'est pas dans le FOV -> Arbre VIDE
 }
 
-Arbre Arbre4(Point A[]) // Cree le 4-arbre qui represente ce qui est vu par le joueur
+Arbre Arbre4(Point A[]) // Cree le 4-arbre qui represente ce qui est visible par le joueur
 {
     if(inclus(A)==FALSE)
         return ConsArbre(VIDE,ArbreVide(),ArbreVide(),ArbreVide(),ArbreVide());
@@ -158,7 +158,7 @@ Arbre Arbre4(Point A[]) // Cree le 4-arbre qui represente ce qui est vu par le j
     return ArbreVide(); // Cas d'erreur
 }
 
-void objectifFin() // Est ce que tous les objectifs ont ete trouves ?
+void objectifFin() // Est ce que tous les objectifs ont été trouvés ?
 {
 	int i,finJeu = TRUE;
 	for(i=0; i<NBOBJECTIF; i++){
