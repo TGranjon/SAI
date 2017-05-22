@@ -6,7 +6,7 @@ float posZ=-1;
 float visX=0;
 float visZ=5;
 //Fin des déplacements
-int finDuJeu=FALSE, perdu=FALSE; // booleens de fin de partie
+int finDuJeu=FALSE, perdu=FALSE; // Booléens de fin de partie
 TableTotale tableT; // Liste des carrés de collision
 TableObjetTotale tabObj; // Tableau contenant les objets
 Arbre Ar; // 4-arbre
@@ -316,7 +316,7 @@ void Affichage(){
 		glClearColor(0,0,0,1);
 		glMatrixMode(GL_PROJECTION);
 	    glLoadIdentity();
-	    //Mise en place de l'observateur
+	    //Remise en place de l'observateur
 	    glFrustum(-1,1, -1,1, 0.5,40);
 		//Changement du regard de l'observateur
 	  	gluLookAt(0,1,0, 1,0,1, 0,1,0);
@@ -326,7 +326,7 @@ void Affichage(){
 		glClearColor(0,0,0,1);
 		glMatrixMode(GL_PROJECTION);
 	    glLoadIdentity();
-	    //Mise en place de l'observateur
+	    //Remise en place de l'observateur
 	    glFrustum(-1,1, -1,1, 0.5,40);
 		//Changement du regard de l'observateur
 	  	gluLookAt(0,0,0, 2,1,2, 0,1,0);
@@ -358,11 +358,11 @@ int main(int argc, char * argv[], char * envp[]){
 
   glutIdleFunc(mouvement);
   glClearColor(0,0.4,0.8,0);
-  //Generation des objets
+  //Génération des objets
   float x,y,z,r;
   int i;
 
-  //Boucle de creation des NBOBJET objets
+  //Boucle de création des NBOBJET objets
   for(i=0; i<NBOBJET; i++){
   	int objet = rand()%(4-1)+1;
    	x=0;y=0;z=0;r=0;
