@@ -5,7 +5,7 @@ Arbre ArbreVide() // Retourne un arbre vide
   return NULL;
 }
 
-Arbre ConsArbre(Element e, ...) // Construit un arbre avec les paramètres proposés
+Arbre ConsArbre(Element e, ...) // Construit un arbre avec les paramÃ¨tres proposÃ©s
 {
   Arbre k=(Arbre)malloc(1*sizeof(Arbre));
   va_list params;
@@ -21,7 +21,7 @@ Arbre ConsArbre(Element e, ...) // Construit un arbre avec les paramètres propos
   return k;
 }
 
-void vider(Arbre A) // Libère la mémoire prise par un arbre et ses fils
+void vider(Arbre A) // LibÃ¨re la mÃ©moire prise par un arbre et ses fils
 {
     int i;
     for(i=0;i<4;i++)
@@ -32,7 +32,7 @@ void vider(Arbre A) // Libère la mémoire prise par un arbre et ses fils
     free(A);
 }
 
-int EstVide(Arbre A) // Est-ce que A est un arbre vide ?
+int EstVide(Arbre A) // Est ce que A est un arbre vide ?
 {
     if(A==NULL)
         return TRUE;
