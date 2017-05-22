@@ -58,6 +58,8 @@ int toucheObjectif(float xP, float zP);
 
 int dansPlateau(float xp, float zp);
 
+int verification(float xP, float zP);
+
 int pnpoly(int nvert, Point vert[], float testx, float testy);
 
 int inclus(Point A[]);

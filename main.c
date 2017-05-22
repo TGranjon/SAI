@@ -50,6 +50,15 @@ int dansPlateau(float xP, float zP) // Est ce que le point(xP,0,zP) est dans le 
 	return FALSE;
 }
 
+int verification(float xP, float zP) // Vérifie si on n'est pas dans le plateau ou dans un espace occupé
+{
+    if(appartient(xP,zP)==TRUE)
+        return TRUE;
+    if(dansPlateau(xP,zP)==FALSE)
+        return TRUE;
+    return FALSE;
+}
+
 int pnpoly(int nvert, Point vert[], float testx, float testz) // Est ce que le point(x,y) est dans un polygone ? (0 = non, 1 = oui)
 //nvert est le nombre de cotés
 //vert est le polygone
@@ -190,30 +199,30 @@ void clavier(unsigned char touche, int x, int y) // Fonction de gestion du clavi
 		        visZ = -cos(angle);
 		        break;
 		    case 'z' :
-		        if(appartient(posX+visX*0.3,posZ+visZ*0.3)==TRUE) // Rentre dans un objet solide ?
+		        if(appartient(posX+visX*0.3,posZ+visZ*0.3)==TRUE) // Rentre-t-on dans un objet solide ?
 		            break;
-		        o=toucheObjectif(posX+visX*0.3,posZ+visZ*0.3); // Rentre dans un objectif ?
+		        o=toucheObjectif(posX+visX*0.3,posZ+visZ*0.3); // Rentre-t-on dans un objectif ?
 		        if(o>-1)
 		        {
 		            objectif_liste[o].cache=FALSE;
 					objectifFin();
 				}
-		        if(dansPlateau(posX+visX*0.3,posZ+visZ*0.3)==TRUE) // Sort du plateau ?
+		        if(dansPlateau(posX+visX*0.3,posZ+visZ*0.3)==TRUE) // Sort-on du plateau ?
 		        {
 		        	posX += visX * 0.3;
 		    	    posZ += visZ * 0.3;
 		        }
 		        break;
 		    case 's' :
-		        if(appartient(posX-visX*0.3,posZ-visZ*0.3)==TRUE) // Rentre dans un objet solide
+		        if(appartient(posX-visX*0.3,posZ-visZ*0.3)==TRUE) // Rentre-t-on dans un objet solide
 		            break;
-		        o=toucheObjectif(posX-visX*0.3,posZ-visZ*0.3); // Rentre dans un objectif
+		        o=toucheObjectif(posX-visX*0.3,posZ-visZ*0.3); // Rentre-t-on dans un objectif
 		        if(o>-1)
 		        {
 		            objectif_liste[o].cache=FALSE;
 					objectifFin();
 				}
-		        if(dansPlateau(posX-visX*0.3,posZ-visZ*0.3)==TRUE) // Sort du plateau ?
+		        if(dansPlateau(posX-visX*0.3,posZ-visZ*0.3)==TRUE) // Sort-on du plateau ?
 		        {
 		      	  	posX -= visX * 0.3;
 		        	posZ -= visZ * 0.3;
@@ -262,6 +271,7 @@ void Affichage(){
       P[2].z=53;
       P[3].z=52;
       P[3].z=-55;
+
       //Fonctions arbre
       Ar = Arbre4(P);
       vider(Ar);
@@ -364,7 +374,7 @@ int main(int argc, char * argv[], char * envp[]){
 		do{
 			x=(rand()%(104)+1)-52;
 			z=(rand()%(108)+1)-55;
-		}while((appartient(x,z)==TRUE)||(appartient(x+5,z+5)==TRUE));
+		}while((verification(x,z)==TRUE)||(verification(x+5,z+5)==TRUE));
 		y=0;
 		tabObj.objet[tabObj.taille].typeObjet=objet;
 		tabObj.objet[tabObj.taille].x=x;
@@ -386,7 +396,7 @@ int main(int argc, char * argv[], char * envp[]){
    		do{
 			x=(rand()%(104)+1)-52;
 			z=(rand()%(108)+1)-55;
-		}while((appartient(x,z)==TRUE)||(appartient(x+r,z+r)==TRUE));
+		}while((verification(x,z)==TRUE)||(verification(x+r,z+r)==TRUE));
    		y=0;
    		r=1;
 	 	tabObj.objet[tabObj.taille].typeObjet=objet;
@@ -410,7 +420,7 @@ int main(int argc, char * argv[], char * envp[]){
    		do{
 			x=(rand()%(104)+1)-52;
 			z=(rand()%(108)+1)-55;
-		}while((appartient(x,z)==TRUE)||(appartient(x+0.5,z+0.5)));
+		}while((verification(x,z)==TRUE)||(verification(x+0.5,z+0.5)==TRUE));
     	y=0;
 	 	tabObj.objet[tabObj.taille].typeObjet=objet;
 		tabObj.objet[tabObj.taille].x=x;
@@ -434,7 +444,7 @@ int main(int argc, char * argv[], char * envp[]){
       do{
         x=(rand()%(104)+1)-52;
         z=(rand()%(108)+1)-55;
-      }while((appartient(x,z)==TRUE)||(toucheObjectif(x,z)==TRUE));
+      }while((verification(x,z)==TRUE)||(toucheObjectif(x,z)==TRUE));
       objectif_liste[i].cache=TRUE;
       objectif_liste[i].coordonnees.x=x;
       objectif_liste[i].coordonnees.z=z;
@@ -443,7 +453,7 @@ int main(int argc, char * argv[], char * envp[]){
   do{
       x=(rand()%(104)+1)-52;
       z=(rand()%(108)+1)-55;
-  }while((appartient(x,z)==TRUE)||(toucheObjectif(x,z)==TRUE));
+  }while((verification(x,z)==TRUE)||(toucheObjectif(x,z)==TRUE));
   posX=x;
   posZ=z;
   visX=sin(angle);
