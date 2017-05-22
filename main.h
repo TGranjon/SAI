@@ -66,7 +66,7 @@ int inclus(Point A[]);
 
 int contenu(Point A[]);
 
-arbre Arbre4(Point A[]);
+Arbre Arbre4(Point A[]);
 
 void objectifFin();
 
