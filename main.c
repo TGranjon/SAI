@@ -430,7 +430,7 @@ int main(int argc, char * argv[], char * envp[]){
   do{
       x=(rand()%(104)+1)-52;
       z=(rand()%(108)+1)-55;
-  }while((appartient(x,z)==TRUE)&&(toucheObjectif(x,z)==TRUE));
+  }while((appartient(x,z)==TRUE)||(toucheObjectif(x,z)==TRUE));
   posX=x;
   posZ=z;
   visX=sin(angle);
