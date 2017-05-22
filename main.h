@@ -30,7 +30,7 @@ typedef struct tabletotale // Structure TableTotale(taille, forme[])
 } TableTotale;
 
 
-typedef struct detailObjet
+typedef struct detailObjet // Structure DetailObjet(int, float, float, float, float)
 {
 	int typeObjet;
 	float x;
@@ -39,7 +39,7 @@ typedef struct detailObjet
 	float r;
 } DetailObjet;
 
-typedef struct tableobjettotale
+typedef struct tableobjettotale // Structure TableObjetTotale(int, DetailObjet[])
 {
     int taille;
     DetailObjet objet[NBOBJET];

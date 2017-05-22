@@ -1,11 +1,11 @@
 #include "main.h"
-// Pour les déplacements
+//Pour les déplacements
 float angle=0;
 float posX=0;
 float posZ=-1;
 float visX=0;
 float visZ=5;
-// Fin des déplacements
+//Fin des déplacements
 int finDuJeu=FALSE, perdu=FALSE; // booleens de fin de partie
 TableTotale tableT; // Liste des carrés de collision
 TableObjetTotale tabObj;//Tableau contenant les objets
@@ -77,9 +77,9 @@ int inclus(Point A[]) // Est ce que le FOV est inclus dans A ?
     for(i=0;i<4;i++)
     {
         if(pnpoly(4,A,fov[i].x,fov[i].z)==1)
-            return TRUE; //Le FOV est dans A -> contenu()
+            return TRUE; // Le FOV est dans A -> contenu()
     }
-    return FALSE; //Le FOV n'est pas dans A -> Arbre VIDE
+    return FALSE; // Le FOV n'est pas dans A -> Arbre VIDE
 }
 
 int contenu(Point A[]) // Est ce que A est contenu dans le FOV ?
@@ -92,10 +92,10 @@ int contenu(Point A[]) // Est ce que A est contenu dans le FOV ?
             c++;
     }
     if(c==4)
-        return 3; //A est intégralement dans le FOV -> Arbre PLEIN
+        return 3; // A est intégralement dans le FOV -> Arbre PLEIN
     if(c>0)
-        return 2; //A est partiellement dans le FOV -> Arbre INTER
-    return 1; //A n'est pas dans le FOV -> Arbre VIDE
+        return 2; // A est partiellement dans le FOV -> Arbre INTER
+    return 1; // A n'est pas dans le FOV -> Arbre VIDE
 }
 
 Arbre Arbre4(Point A[]) // Cree le 4-arbre qui represente ce qui est vu par le joueur
@@ -164,10 +164,10 @@ void objectifFin() // Est ce que tous les objectifs ont ete trouves ?
 
 void vBitmapOutput(int x, int z, char *string, void *font) // Fonction d'affichage du message de fin
 {
-	int len,i; //len donne la longueur de la chaîne de caractères
-	glRasterPos3f(x,0,z); //Positionne le premier caractère de la chaîne
-	len = (int) strlen(string); //Calcule la longueur de la chaîne
-	for (i = 0; i < len; i++){ //Affiche chaque caractère de la chaîne
+	int len,i; // len donne la longueur de la chaîne de caractères
+	glRasterPos3f(x,0,z); // Positionne le premier caractère de la chaîne
+	len = (int) strlen(string); // Calcule la longueur de la chaîne
+	for (i = 0; i < len; i++){ // Affiche chaque caractère de la chaîne
 	 glutBitmapCharacter(font,string[i]);
 	}
 }
@@ -190,30 +190,30 @@ void clavier(unsigned char touche, int x, int y) // Fonction de gestion du clavi
 		        visZ = -cos(angle);
 		        break;
 		    case 'z' :
-		        if(appartient(posX+visX*0.3,posZ+visZ*0.3)==TRUE) //Rentre dans un objet solide ?
+		        if(appartient(posX+visX*0.3,posZ+visZ*0.3)==TRUE) // Rentre dans un objet solide ?
 		            break;
-		        o=toucheObjectif(posX+visX*0.3,posZ+visZ*0.3); //Rentre dans un objectif ?
+		        o=toucheObjectif(posX+visX*0.3,posZ+visZ*0.3); // Rentre dans un objectif ?
 		        if(o>-1)
 		        {
 		            objectif_liste[o].cache=FALSE;
 					objectifFin();
 				}
-		        if(dansPlateau(posX+visX*0.3,posZ+visZ*0.3)==TRUE) //Sort du plateau ?
+		        if(dansPlateau(posX+visX*0.3,posZ+visZ*0.3)==TRUE) // Sort du plateau ?
 		        {
 		        	posX += visX * 0.3;
 		    	    posZ += visZ * 0.3;
 		        }
 		        break;
 		    case 's' :
-		        if(appartient(posX-visX*0.3,posZ-visZ*0.3)==TRUE) //Rentre dans un objet solide
+		        if(appartient(posX-visX*0.3,posZ-visZ*0.3)==TRUE) // Rentre dans un objet solide
 		            break;
-		        o=toucheObjectif(posX-visX*0.3,posZ-visZ*0.3); //Rentre dans un objectif
+		        o=toucheObjectif(posX-visX*0.3,posZ-visZ*0.3); // Rentre dans un objectif
 		        if(o>-1)
 		        {
 		            objectif_liste[o].cache=FALSE;
 					objectifFin();
 				}
-		        if(dansPlateau(posX-visX*0.3,posZ-visZ*0.3)==TRUE) //Sort du plateau ?
+		        if(dansPlateau(posX-visX*0.3,posZ-visZ*0.3)==TRUE) // Sort du plateau ?
 		        {
 		      	  	posX -= visX * 0.3;
 		        	posZ -= visZ * 0.3;
@@ -319,19 +319,20 @@ void gameOver()
 
 int main(int argc, char * argv[], char * envp[]){
 
+  //Initialisation variables globales et rand
   tableT.taille=0;
   tabObj.taille=0;
   srand(time(NULL));
-  //Ar = ArbreVide();
 
+  //Initialisation fenêtre
   glutInit(&argc,argv);
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
   glutInitWindowSize(600,600);
   glutInitWindowPosition(350,60);
-  glutCreateWindow("Projet - Main");
+  glutCreateWindow("Run city ! Run !");
   glEnable(GL_DEPTH_TEST);
-
   glutDisplayFunc(Affichage);
+
   glutIdleFunc(mouvement);
   glClearColor(0,0.4,0.8,0);
   //Generation des objets
@@ -448,6 +449,6 @@ int main(int argc, char * argv[], char * envp[]){
   //Timer
   glutTimerFunc(30000+(30000*NBOBJECTIF),gameOver,0); // 30s + 30s par objectif
 
-  glutMainLoop();
+  glutMainLoop(); // Boucle du programme
   return 0;
 }
