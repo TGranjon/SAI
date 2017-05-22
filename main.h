@@ -10,8 +10,6 @@
 
 #define NBOBJET 20 // Nombre d'objet généré aléatoirement
 #define NBOBJECTIF 1 // Nombre d'objet généré aléatoirement
-#define TRUE 1
-#define FALSE 0
 
 typedef struct point // Structure Point(x,z)
 {
