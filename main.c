@@ -8,7 +8,7 @@ float visZ=5;
 //Fin des déplacements
 int finDuJeu=FALSE, perdu=FALSE; // booleens de fin de partie
 TableTotale tableT; // Liste des carrés de collision
-TableObjetTotale tabObj;// Tableau contenant les objets
+TableObjetTotale tabObj; // Tableau contenant les objets
 Arbre Ar; // 4-arbre
 TableTotale tableT; // Liste des carrés de collision
 TableObjectif objectif_liste[NBOBJECTIF]; // Liste des objectifs
