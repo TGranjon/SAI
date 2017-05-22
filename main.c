@@ -364,7 +364,7 @@ int main(int argc, char * argv[], char * envp[]){
 		do{
 			x=(rand()%(104)+1)-52;
 			z=(rand()%(108)+1)-55;
-		}while((appartient(x,z)==TRUE)||(toucheObjectif(x,z)==TRUE));
+		}while(appartient(x,z)==TRUE);
 		y=0;
 		tabObj.objet[tabObj.taille].typeObjet=objet;
 		tabObj.objet[tabObj.taille].x=x;
@@ -386,7 +386,7 @@ int main(int argc, char * argv[], char * envp[]){
    		do{
 			x=(rand()%(104)+1)-52;
 			z=(rand()%(108)+1)-55;
-		}while((appartient(x,z)==TRUE)||(toucheObjectif(x,z)==TRUE));
+		}while(appartient(x,z)==TRUE);
    		y=0;
    		r=1;
 	 	tabObj.objet[tabObj.taille].typeObjet=objet;
@@ -410,7 +410,7 @@ int main(int argc, char * argv[], char * envp[]){
    		do{
 			x=(rand()%(104)+1)-52;
 			z=(rand()%(108)+1)-55;
-		}while((appartient(x,z)==TRUE)||(toucheObjectif(x,z)==TRUE));
+		}while(appartient(x,z)==TRUE);
     	y=0;
 	 	tabObj.objet[tabObj.taille].typeObjet=objet;
 		tabObj.objet[tabObj.taille].x=x;
