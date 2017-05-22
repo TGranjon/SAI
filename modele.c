@@ -112,7 +112,7 @@ void Sapin(float x, float y, float z, float r) // Coordonées du bas gauche du tr
     pyramide(x-r,y+3,z-r);
 }
 
-void Lampadaire(float x, float y, float z) // Coordonnées du pied
+void Lampadaire(float x, float y, float z) // Coordonnées du bas gauche du pied
 {
     glColor3ub(166,166,166);
     parallepipede(x,y,z,x+0.5,y+3,z+0.5);
