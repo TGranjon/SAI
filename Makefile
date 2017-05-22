@@ -18,4 +18,4 @@ main.o:
 	$(CC) $(OPTION1) $(OPTION3) main.c main.h
 
 clean:
-	rm -rf *.o main
+	rm -rf *.o main arbre.h.gch modele.h.gch main.h.gch
