@@ -246,7 +246,7 @@ void Affichage(){
 	  glMatrixMode(GL_PROJECTION);
 	  glLoadIdentity();
 	  //Mise en place de l'observateur
-	  glFrustum(-1,1, -1,1, 0.5,40);
+	  glFrustum(-1,1, -1,1, 0.5,30);
 	  //Fin de mise en place de l'observateur
 	  gluLookAt(posX,1,posZ, posX+visX,1,posZ+visZ, 0,1,0);
 
@@ -256,9 +256,9 @@ void Affichage(){
       fov[1].x=posX+visX+1; // Bas droit
       fov[1].z=posZ+visZ+0.5;
       fov[2].x=posX+visX+80; // Haut droit
-      fov[2].z=posZ+visZ+40;
+      fov[2].z=posZ+visZ+30;
       fov[3].x=posX+visX-80; // Haut gauche
-      fov[3].z=posZ+visZ+40;
+      fov[3].z=posZ+visZ+30;
 
 	  //Creation du plateau
 	  plateau(-52,0,-55,104,108);
@@ -317,7 +317,7 @@ void Affichage(){
 		glMatrixMode(GL_PROJECTION);
 	    glLoadIdentity();
 	    //Remise en place de l'observateur
-	    glFrustum(-1,1, -1,1, 0.5,40);
+	    glFrustum(-1,1, -1,1, 0.5,30);
 		//Changement du regard de l'observateur
 	  	gluLookAt(0,1,0, 1,0,1, 0,1,0);
 		vBitmapOutput(2,1,"Game Over",GLUT_BITMAP_TIMES_ROMAN_24);
@@ -327,7 +327,7 @@ void Affichage(){
 		glMatrixMode(GL_PROJECTION);
 	    glLoadIdentity();
 	    //Remise en place de l'observateur
-	    glFrustum(-1,1, -1,1, 0.5,40);
+	    glFrustum(-1,1, -1,1, 0.5,30);
 		//Changement du regard de l'observateur
 	  	gluLookAt(0,0,0, 2,1,2, 0,1,0);
 		vBitmapOutput(12,2,"VOUS AVEZ GAGNE !",GLUT_BITMAP_TIMES_ROMAN_24);
@@ -465,9 +465,9 @@ int main(int argc, char * argv[], char * envp[]){
   fov[1].x=posX+visX+1; // Bas droit
   fov[1].z=posZ+visZ+0.5;
   fov[2].x=posX+visX+80; // Haut droit
-  fov[2].z=posZ+visZ+40;
+  fov[2].z=posZ+visZ+30;
   fov[3].x=posX+visX-80; // Haut gauche
-  fov[3].z=posZ+visZ+40;
+  fov[3].z=posZ+visZ+30;
 
   //Timer
   glutTimerFunc(30000+(30000*NBOBJECTIF),gameOver,0); // 30s + 30s par objectif
