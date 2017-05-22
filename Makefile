@@ -2,14 +2,20 @@ CC = gcc
 OPTION1 = -Wall
 OPTION2 = -o
 OPTION3 = -c
-OPTION4 = -lglut -lGLU -lGL -lm
+GL = -lglut -lGLU -lGL
+MATH = -lm
 
-all: main
+main: main.o modele.o arbre.o
+	$(CC) $(OPTION2) main main.o modele.o arbre.o $(MATH) $(GL)
+
+arbre.o:
+	$(CC) $(OPTION1) $(OPTION3) arbre.c arbre.h
+	
+modele.o:
+	$(CC) $(OPTION1) $(OPTION3) modele.c modele.h
 
 main.o:
-	$(CC) $(OPTION1) $(OPTION2) main.o $(OPTION3) main.c
-main: main.o
-	$(CC) $(OPTION2) main main.o $(OPTION4)
+	$(CC) $(OPTION1) $(OPTION3) main.c main.h
 
 clean:
 	rm -rf *.o main
