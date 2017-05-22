@@ -53,7 +53,7 @@ int dansPlateau(float xP, float zP) // Est ce que le point(xP,0,zP) est dans le 
 int pnpoly(int nvert, Point vert[], float testx, float testz) // Est ce que le point(x,y) est dans un polygone ? (0 = non, 1 = oui)
 //nvert est le nombre de cotés
 //vert est le polygone
-//testx et testz sont les coordonnees du point a tester
+//testx et testz sont les coordonnées du point a tester
 {
   int i, j, c = 0;
   float vertx[nvert];
@@ -240,7 +240,7 @@ void Affichage(){
 	  glFrustum(-1,1, -1,1, 0.5,40);
 	  //Fin de mise en place de l'observateur
 	  gluLookAt(posX,1,posZ, posX+visX,1,posZ+visZ, 0,1,0);
-	  
+
 	  //Calcul FOV
       fov[0].x=posX+visX-1; // Bas gauche
       fov[0].z=posZ+visZ+0.5;
@@ -460,7 +460,7 @@ int main(int argc, char * argv[], char * envp[]){
   fov[3].z=posZ+visZ+40;
 
   //Timer
-  glutTimerFunc(1000+(1000*NBOBJECTIF),gameOver,0); // 30s + 30s par objectif
+  glutTimerFunc(30000+(30000*NBOBJECTIF),gameOver,0); // 30s + 30s par objectif
 
   glutMainLoop(); // Boucle du programme
   return 0;
