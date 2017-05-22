@@ -8,8 +8,8 @@
 #include "arbre.h"
 #include "modele.h"
 
-#define NBOBJET 20 // Nombre d'objet généré aléatoirement
-#define NBOBJECTIF 1 // Nombre d'objet généré aléatoirement
+#define NBOBJET 100 // Nombre d'objet généré aléatoirement //! Testé jusqu'à 500 -> peu d'espace où se déplacer
+#define NBOBJECTIF 5 // Nombre d'objectifs généré aléatoirement //! Testé jusqu'à 10 -> crash arbre
 
 typedef struct point // Structure Point(x,z)
 {
