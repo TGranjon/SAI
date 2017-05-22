@@ -9,7 +9,7 @@ float visZ=5;
 int finDuJeu=FALSE, perdu=FALSE; // booleens de fin de partie
 TableTotale tableT; // Liste des carrés de collision
 TableObjetTotale tabObj;//Tableau contenant les objets
-arbre Ar; // 4-arbre
+Arbre Ar; // 4-arbre
 TableTotale tableT; // Liste des carrés de collision
 TableObjectif objectif_liste[NBOBJECTIF]; // Liste des objectifs
 Point fov[4]; // FOV de l'utilisateur
@@ -98,7 +98,7 @@ int contenu(Point A[]) // Est ce que A est contenu dans le FOV ?
     return 1; //A n'est pas dans le FOV -> Arbre VIDE
 }
 
-arbre Arbre4(Point A[]) // Cree le 4-arbre qui represente ce qui est vu par le joueur
+Arbre Arbre4(Point A[]) // Cree le 4-arbre qui represente ce qui est vu par le joueur
 {
     if(inclus(A)==FALSE)
         return ConsArbre(VIDE,ArbreVide(),ArbreVide(),ArbreVide(),ArbreVide());
@@ -263,8 +263,8 @@ void Affichage(){
       P[3].z=52;
       P[3].z=-55;
       //Fonctions arbre
-      /*Ar = Arbre4(P);
-      vider(Ar);*/
+      Ar = Arbre4(P);
+      vider(Ar);
 
 	  //Affichage des objets générés aléatoirement
 	  int typeObjet, j;
@@ -446,7 +446,7 @@ int main(int argc, char * argv[], char * envp[]){
   fov[3].z=posZ+visZ+40;
 
   //Timer
-  glutTimerFunc(60000,gameOver,0); // 60000 ms = 1 min
+  glutTimerFunc(30000+(30000*NBOBJECTIF),gameOver,0); // 30s + 30s par objectif
 
   glutMainLoop();
   return 0;

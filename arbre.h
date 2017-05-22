@@ -13,24 +13,24 @@
 #define TRUE 1
 #define FALSE 0
 
-typedef int element;
+typedef int Element;
 
 typedef struct s_arbre // Structure arbre(racine,fils[])
 {
-  element racine;
+  Element racine;
   struct s_arbre** fils;
 }s_arbre;
-typedef s_arbre* arbre;
+typedef s_arbre* Arbre;
 
-arbre ArbreVide();
+Arbre ArbreVide();
 
-arbre ConsArbre(element e, ...);
+Arbre ConsArbre(Element e, ...);
 
-void vider(arbre A);
+void vider(Arbre A);
 
-int EstVide(arbre A);
+int EstVide(Arbre A);
 
-void Afficher(arbre A);
+void Afficher(Arbre A);
 
 #endif
 

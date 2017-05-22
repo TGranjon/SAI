@@ -1,27 +1,27 @@
 #include "arbre.h"
 
-arbre ArbreVide() // Retourne un arbre vide
+Arbre ArbreVide() // Retourne un arbre vide
 {
   return NULL;
 }
 
-arbre ConsArbre(element e, ...) // Construit un arbre avec les paramètres proposés
+Arbre ConsArbre(Element e, ...) // Construit un arbre avec les paramètres proposés
 {
-  arbre k=(arbre)malloc(1*sizeof(arbre));
+  Arbre k=(Arbre)malloc(1*sizeof(Arbre));
   va_list params;
   va_start(params, e);
   k->racine=e;
-  k->fils=(arbre*)malloc(4*sizeof(arbre));
+  k->fils=(Arbre*)malloc(4*sizeof(Arbre));
   int i;
   for(i=0;i<4;i++)
     {
-      arbre suiv = va_arg(params, arbre);
+      Arbre suiv = va_arg(params, Arbre);
       k->fils[i]=suiv;
     }
   return k;
 }
 
-void vider(arbre A) // Libère la mémoire prise par un arbre
+void vider(Arbre A) // Libère la mémoire prise par un arbre
 {
     int i;
     for(i=0;i<4;i++)
@@ -32,14 +32,14 @@ void vider(arbre A) // Libère la mémoire prise par un arbre
     free(A);
 }
 
-int EstVide(arbre A) // Est-ce que A est un arbre vide ?
+int EstVide(Arbre A) // Est-ce que A est un arbre vide ?
 {
     if(A==NULL)
         return TRUE;
     return FALSE;
 }
 
-void Afficher(arbre A) // Affiche le contenu de A
+void Afficher(Arbre A) // Affiche le contenu de A
 {
   if(EstVide(A) == TRUE)
     {
