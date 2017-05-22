@@ -446,7 +446,7 @@ int main(int argc, char * argv[], char * envp[]){
   fov[3].z=posZ+visZ+40;
 
   //Timer
-  glutTimerFunc(60000,gameOver,0); // 60000 ms = 1 min
+  glutTimerFunc(30000+(30000*NBOBJECTIF),gameOver,0); // 30s + 30s par objectif
 
   glutMainLoop();
   return 0;
