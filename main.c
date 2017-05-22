@@ -1,4 +1,5 @@
 #include "main.h"
+
 // Pour les déplacements
 float angle=0;
 float posX=0;
@@ -240,7 +241,7 @@ void Affichage(){
 	  glFrustum(-1,1, -1,1, 0.5,40);
 	  //Fin de mise en place de l'observateur
 	  gluLookAt(posX,1,posZ, posX+visX,1,posZ+visZ, 0,1,0);
-
+	  
 	  //Calcul FOV
       fov[0].x=posX+visX-1; // Bas gauche
       fov[0].z=posZ+visZ+0.5;
@@ -304,10 +305,23 @@ void Affichage(){
 	//Le jeu est fini
 	}else if(perdu == TRUE){
 		glClearColor(0,0,0,1);
-		vBitmapOutput(visX+posX,visZ+posZ-25,"Game Over",GLUT_BITMAP_TIMES_ROMAN_24);
+		glMatrixMode(GL_PROJECTION);
+	    glLoadIdentity();
+	    //Mise en place de l'observateur
+	    glFrustum(-1,1, -1,1, 0.5,40);
+		//Changement du regard de l'observateur
+	  	gluLookAt(0,1,0, 1,0,1, 0,1,0);
+		vBitmapOutput(2,1,"Game Over",GLUT_BITMAP_TIMES_ROMAN_24);
 	}else if(finDuJeu == TRUE){
 		glClearColor(0,0,0,1);
-		vBitmapOutput(visX+posX-5,visZ+posZ-25,"VOUS AVEZ GAGNE !",GLUT_BITMAP_TIMES_ROMAN_24);
+		glClearColor(0,0,0,1);
+		glMatrixMode(GL_PROJECTION);
+	    glLoadIdentity();
+	    //Mise en place de l'observateur
+	    glFrustum(-1,1, -1,1, 0.5,40);
+		//Changement du regard de l'observateur
+	  	gluLookAt(0,0,0, 2,1,2, 0,1,0);
+		vBitmapOutput(12,2,"VOUS AVEZ GAGNE !",GLUT_BITMAP_TIMES_ROMAN_24);
 	}
 	glutSwapBuffers();
 }
@@ -446,7 +460,7 @@ int main(int argc, char * argv[], char * envp[]){
   fov[3].z=posZ+visZ+40;
 
   //Timer
-  glutTimerFunc(30000+(30000*NBOBJECTIF),gameOver,0); // 30s + 30s par objectif
+  glutTimerFunc(1000+(1000*NBOBJECTIF),gameOver,0); // 30s + 30s par objectif
 
   glutMainLoop();
   return 0;
